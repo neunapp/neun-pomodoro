@@ -1,0 +1,19 @@
+
+.header-main {
+  display: flex;
+  padding: 10px 15px;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 5px rgba(153, 128, 250, 0.2);
+  &__title {
+    font-family: $ff-1;
+    font-weight: bold;
+    font-size: 24px;
+    color: $color-3;
+  }
+  &__options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

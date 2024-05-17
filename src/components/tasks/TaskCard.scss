@@ -1,0 +1,73 @@
+.task-card {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  background: $color-8;
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__icon {
+      color: $color-3;
+    }
+    &__left {
+      display: flex;
+      align-items: center;
+      &__tag {
+        background: $color-2;
+        font-weight: bold;
+        font-family: $ff-1;
+        width: 80px;
+        text-align: center;
+        color: $color-3;
+        margin: 5px;
+        border-radius: 10px;
+        font-size: 14px;
+        padding: 5px;
+        margin-bottom: 10px;
+        &.grey {
+          background: $color-7;
+          color: $color-8;
+        }
+      }
+    }
+  }
+  &__body {
+    padding: 5px;
+    font-family: $ff-1;
+    &__title {
+      font-weight: bold;
+      font-size: 20px;
+      color: $color-3;
+    }
+    &__text {
+      font-size: 14px;
+      color: $color-3;
+    }
+    &__date {
+      color: $color-7;
+      font-size: 14px;
+      font-family: $ff-2;
+    }
+  }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__tag {
+      padding: 5px;
+      background: $color-7;
+      color: $color-8;
+      font-weight: bold;
+      font-family: $ff-2;
+      border-radius: 15px;
+    }
+    &__icon {
+      cursor: pointer;
+      color: $color-3;
+      &:hover {
+        color: $color-7;
+      }
+    }
+  }
+}

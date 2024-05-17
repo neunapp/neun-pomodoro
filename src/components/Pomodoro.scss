@@ -1,0 +1,59 @@
+.pomodoro {
+  width: 100%;
+  height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  &__body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1em;
+  }
+  &__clock {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 2px solid $color-1;
+    margin-bottom: 5em;
+    box-shadow: 0px 0px 10px 5px #0652DD;
+    &__item {
+      display: flex;
+      font-family: $ff-1;
+      color: $color-3;
+      font-size: 60px;
+    }
+    &__time { 
+    }
+  }
+  &__ctrls {
+    display: flex;
+    align-items: center;
+    &__btn {
+      background: $color-1;
+      color: $color-3;
+      display: block;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 5px;
+      &.play {
+        margin-top: 2em;
+        background: $color-2;
+        width: 65px;
+        height: 65px;
+      }
+      &:hover {
+        opacity: 0.8;
+        background: $color-4;
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.change-task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 200px;
+  &__text {
+    font-weight: bold;
+    font-family: $ff-1;
+    font-size: 18px;
+    margin-bottom: 1em;
+  }
+  &__ctrls {
+    &__btn {
+      width: 100px;
+      background: $color-2;
+      color: $color-3;
+      font-weight: bold;
+      margin: 10px;
+      text-align: center;
+      padding: 5px;
+      border-radius: 10px;
+      &.red {
+        background: $color-4;
+      }
+    }
+  }
+}
