@@ -1,0 +1,34 @@
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  &__body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+  }
+}
+
+.loading-circle {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(143, 22, 103, 0.1);
+  border-radius: 50%;
+  border-top-color: $color-2;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
