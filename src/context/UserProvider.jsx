@@ -6,7 +6,7 @@ const GlobalContext = createContext();
 const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState({
     'email': 'prueba@gmail.com', 
-    'id':'SDER001',
+    'id':'U00008',
     'avatar': 'https://picsum.photos/id/101/200/200'
   })
 

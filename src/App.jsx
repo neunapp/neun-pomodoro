@@ -11,7 +11,6 @@ function App() {
       <HeaderMain></HeaderMain>
       <RouterProvider router={routes} />
     </GlobalProvider>
-    
   )
 }
 

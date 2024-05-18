@@ -1,14 +1,23 @@
+//
+import { format } from 'date-fns';
+//
 import { BiTask } from "react-icons/bi";
 import { MdOutlineDescription } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
 
-import { useState } from "react";
+import { GlobalContext } from "../../context/UserProvider";
+import { useState, useContext } from "react";
 
 //local
 import BaseForm from "../base/BaseForm";
 import BaseSelectForm from "../base/BaseSelectForm";
+// services
+import { apiAddTask } from '../../services/TaskServices.js'
+
 
 function FormTask() {
+  const { user } = useContext(GlobalContext);
+  
   const [titleTask, setTitleTask] = useState('')
   const [descriptionTask, setdescriptionTask] = useState('')
   const [dateTask, setdateTask] = useState('')
@@ -21,12 +30,28 @@ function FormTask() {
     {'id': 3,'value': 'XL', 'text': 'XL - Muy Grande'},
   ]
 
-  const enviarDatos = () => {
-    console.log(titleTask, descriptionTask, dateTask, sizeTask);
+  const enviarDatos = async () => {
+    const ahora = format(new Date(), 'dd-MM-yyyy')
+    console.log(titleTask, descriptionTask, dateTask, sizeTask, user.id, ahora);
+    let data = {
+      created: ahora,
+      title: titleTask,
+      description: descriptionTask,
+      date_end: format(dateTask, 'dd-MM-yyyy'),
+      size: sizeTask,
+      user_id: user.id,
+      state: 'En Proceso'
+    }
+    try {
+      const response = apiAddTask(data)
+      console.log(response);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return ( 
-    <form onSubmit={enviarDatos} className="">
+    <form className="">
       <BaseForm
         tipo="text"
         placeholder="Tarea..." 
@@ -56,8 +81,9 @@ function FormTask() {
       />
       <div className="is-flex is-justify-content-center  p-2 mt-6">
         <button 
-          type="submit"
-          className="button is-info is-rounded is-fullwidth" 
+          type="button"
+          onClick={enviarDatos}
+          className="button is-info is-rounded is-fullwidth"
         >
             Agregar Tarea
         </button>

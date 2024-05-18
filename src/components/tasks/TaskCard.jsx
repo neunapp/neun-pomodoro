@@ -4,7 +4,7 @@ import ChangeStateTask from './ChangeStateTask';
 import { CiMenuKebab } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
 
-function TaskCard() {
+function TaskCard(props) {
 
   let [showChangeState, setShowChangeState] = useState(false)
   const openCloseFlotaing = (value) => setShowChangeState(value)
@@ -16,7 +16,7 @@ function TaskCard() {
       <div className="task-card">
         <div className="task-card__head">
           <div className="task-card__head__left">
-            <a href="#" className="task-card__head__left__tag">S</a>
+            <a href="#" className="task-card__head__left__tag">{ props.task.size }</a>
             <a href="#" className="task-card__head__left__tag grey">130 min</a>
           </div>
           <a href="#" className="task-card__head__icon">
@@ -25,9 +25,9 @@ function TaskCard() {
           
         </div>
         <div className="task-card__body">
-          <h3 className="task-card__body__title">Diseñar Card Producto</h3>
-          <p className="task-card__body__text">completar el diseño del card producto en css para prouecto vuejs</p>
-          <p className="task-card__body__date">Caduca: 12 ene 2024</p>
+          <h3 className="task-card__body__title">{ props.task.title }</h3>
+          <p className="task-card__body__text">{ props.task.description }</p>
+          <p className="task-card__body__date">Caduca: { props.task.date_end }</p>
         </div>
         <div className="task-card__footer">
           <a href="#" className='task-card__footer__tag' onClick={() => openCloseFlotaing(true)}>En proceso</a>

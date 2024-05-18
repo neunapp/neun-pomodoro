@@ -45,7 +45,7 @@ function Pomodoro() {
       <div className="pomodoro">
         <div className="pomodoro__body">
           <SelectedTask 
-            tarea="Aqui tarea seleccionada" 
+            tarea="Aqui Tarea seleccionada" 
             ruta="/task"
             child={<CiEdit style={{ fontSize: 30, marginBottom: -5 }}/>}
           />
