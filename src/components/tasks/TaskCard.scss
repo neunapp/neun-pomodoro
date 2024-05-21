@@ -61,6 +61,8 @@
       font-weight: bold;
       font-family: $ff-2;
       border-radius: 15px;
+      min-width: 100px;
+      text-align: center;
     }
     &__icon {
       cursor: pointer;

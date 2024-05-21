@@ -1,29 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import { FaCirclePlus } from "react-icons/fa6";
 //
-import { useEffect, useState } from 'react';
 // local
+import LisTask from './ListTask';
 // services
-import { apiListTask } from '../../services/TaskServices.js'
 // components
-import TaskCard from "./TaskCard"
 // styles
 import './ManageTask.scss'
 
 
 
 function ManageTask() {
-
-  let [listTask, setListTask] = useState([])
-
-  useEffect(() => {
-    const loadTaskApi = async () => {
-      const resultado = await apiListTask()
-      setListTask(resultado)
-    }
-    loadTaskApi()
-  }, [])
-
   const changeStateTask = () => {
 
   }
@@ -46,9 +33,7 @@ function ManageTask() {
         <p>Concentracion: 10 Hrs</p>
       </div>
       <div className="manage-task__body">
-        {listTask.map((_, index) => (
-          <TaskCard key={index} task={listTask[index]} />
-        ))}
+        <LisTask />
       </div>
     </div>
   )

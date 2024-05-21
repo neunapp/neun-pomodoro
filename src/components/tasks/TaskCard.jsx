@@ -1,8 +1,9 @@
-import './TaskCard.scss'
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import ChangeStateTask from './ChangeStateTask';
 import { CiMenuKebab } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
+import './TaskCard.scss'
 
 function TaskCard(props) {
 
@@ -17,7 +18,7 @@ function TaskCard(props) {
         <div className="task-card__head">
           <div className="task-card__head__left">
             <a href="#" className="task-card__head__left__tag">{ props.task.size }</a>
-            <a href="#" className="task-card__head__left__tag grey">130 min</a>
+            <a href="#" className="task-card__head__left__tag grey">{ props.task.minutes } min</a>
           </div>
           <a href="#" className="task-card__head__icon">
             <CiMenuKebab />
@@ -30,10 +31,15 @@ function TaskCard(props) {
           <p className="task-card__body__date">Caduca: { props.task.date_end }</p>
         </div>
         <div className="task-card__footer">
-          <a href="#" className='task-card__footer__tag' onClick={() => openCloseFlotaing(true)}>En proceso</a>
-          <a href="#" className='task-card__footer__icon'>
+          <a 
+            href="#" 
+            className='task-card__footer__tag'      
+            onClick={() => openCloseFlotaing(true)}>
+              { props.task.state }
+          </a>
+          <NavLink to={ '/task/update/2' } className='task-card__footer__icon'>
             <FaRegEdit style={{ fontSize: 25, marginBottom: -5 }}/>
-            </a>
+            </NavLink>
         </div>
       </div>
     </>

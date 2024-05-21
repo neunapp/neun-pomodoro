@@ -1,11 +1,26 @@
 import { db } from  './FirebaseConfig.js'
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { 
+    collection, 
+    getDocs, 
+    addDoc,
+    query, 
+    where, 
+    getDoc,
+    limitToLast,
+    orderBy
+} from 'firebase/firestore';
 
 export const apiListTask = async () => {
     const task = collection(db, 'Task')
-    const queryTask = await getDocs(task)
-    const taskList = queryTask.docs.map(doc => doc.data())
-    return taskList
+    //
+    const q = query(
+        task, 
+        where("state", "==", "En Proceso"),
+        orderBy("date_end", "desc"),
+        limitToLast(10)
+    );
+    const querySnapshots = await getDocs(q)
+    return querySnapshots.docs.map(doc => doc.data())
 }
 
 export const apiAddTask = async (task) => {

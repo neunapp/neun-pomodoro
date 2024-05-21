@@ -6,6 +6,7 @@ import { lazy, Suspense } from 'react';
 
 import TaskPage from "../pages/TaskPage"
 import AddTaskPage from "../pages/AddTaskPage";
+import UpdateTaskPage from "../pages/UpdateTaskPage";
 
 const HomePage = lazy(() => import('../pages/HomePage')); // forma de carga diferida
 
@@ -25,5 +26,9 @@ export const routes = createBrowserRouter([
   {
     path: "/task/add",
     element: <AddTaskPage />
+  },
+  {
+    path: "/task/update/:idTask",
+    element: <UpdateTaskPage />
   },
 ]);

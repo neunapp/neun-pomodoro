@@ -1,6 +1,7 @@
 //
 import { format } from 'date-fns';
 //
+
 import { BiTask } from "react-icons/bi";
 import { MdOutlineDescription } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
@@ -13,16 +14,18 @@ import LoadingApp from '../../apps/LoadingApp';
 import BaseForm from "../base/BaseForm";
 import BaseSelectForm from "../base/BaseSelectForm";
 // services
-import { apiAddTask } from '../../services/TaskServices.js'
 
 
-function FormTask() {
+
+function FormTask(props) {
   const [load, setLoad] = useState(false) 
   const { user } = useContext(GlobalContext);
   const [titleTask, setTitleTask] = useState('')
   const [descriptionTask, setdescriptionTask] = useState('')
-  const [dateTask, setdateTask] = useState('')
-  const [sizeTask, setsizeTask] = useState('0')
+  const ahora = format(new Date(), 'yyyy-MM-dd')
+  const [dateTask, setdateTask] = useState(ahora)
+  const [sizeTask, setsizeTask] = useState('S')
+  const [stateTask, setstateTask] = useState('0')
 
   const optionsSizeTask = [
     {'id': 0,'value': 'S', 'text': 'S - Pequeño'},
@@ -31,9 +34,15 @@ function FormTask() {
     {'id': 3,'value': 'XL', 'text': 'XL - Muy Grande'},
   ]
 
-  const enviarDatos = async () => {
+  const optionsStateTask = [
+    {'id': 0,'value': '0', 'text': 'En Proceso'},
+    {'id': 1,'value': '1', 'text': 'Terminado'},
+    {'id': 2,'value': '2', 'text': 'Pendiente'},
+    {'id': 3,'value': '3', 'text': 'Otro'},
+  ]
+
+  const saveData = async () => {
     setLoad(true)
-    const ahora = format(new Date(), 'dd-MM-yyyy')
     let data = {
       created: ahora,
       title: titleTask,
@@ -41,12 +50,11 @@ function FormTask() {
       date_end: format(dateTask, 'dd-MM-yyyy'),
       size: sizeTask,
       user_id: user.id,
-      state: 'En Proceso'
+      state: '0'
     }
     try {
-      const response = await apiAddTask(data)
+      await props.saveFunction(data)
       setLoad(false)
-      console.log(response.id);
     } catch (error) {
       setLoad(false)
       console.log(error)
@@ -73,7 +81,7 @@ function FormTask() {
         />
         <BaseForm
           tipo="date"
-          placeholder="Descripcion..." 
+          placeholder="fecha..." 
           icon={<MdDateRange />}
           value={dateTask}
           onChange={(value) => {setdateTask(value)}}
@@ -84,16 +92,21 @@ function FormTask() {
           value={sizeTask}
           onChange={(value) => {setsizeTask(value)}}
         />
-        <div className="is-flex is-justify-content-center  p-2 mt-6">
-          <button 
-            type="button"
-            onClick={enviarDatos}
-            className="button is-info is-rounded is-fullwidth"
-          >
-              Agregar Tarea
-          </button>
-        </div>
+        <label className="label m-1">Estado:</label>
+        <BaseSelectForm 
+          options={optionsStateTask}
+          value={stateTask}
+          onChange={(value) => {setstateTask(value)}}
+        />
       </form>
+      <div className="is-flex is-justify-content-center  p-2 mt-6">
+        <button
+          type="button"
+          className="button is-info is-rounded is-fullwidth"
+          onClick={saveData}>
+            Guadar Tarea
+        </button>
+      </div>
     </>
   );
 }

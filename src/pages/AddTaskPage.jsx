@@ -1,12 +1,12 @@
 
 // local
-import FormTask from "../components/tasks/FormTask";
+import AddFormTask from "../components/tasks/AddFormTask";
 
 function AddTaskPage() {
   return (
     <div className="p-4">
       <h3 className="title is-5">Agregar Tarea:</h3>
-      <FormTask />
+      <AddFormTask />
     </div>
   );
 }
