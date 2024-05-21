@@ -61,6 +61,26 @@ function FormTask(props) {
     }
   }
 
+  const deleteTask = () => {
+    setLoad(true)
+    console.log('---- eliminando tarea ---')
+    props.deleteFunction()
+    setLoad(false)
+  }
+  
+  const btnDeleteTask = () => {
+    return(
+      <div className="is-flex is-justify-content-center  p-2 mt-6">
+        <button
+          type="button"
+          className="button is-danger is-rounded is-fullwidth"
+          onClick={deleteTask}>
+            Eliminar
+        </button>
+      </div>
+    )
+  }
+
   return (
     <>
       { load ? <LoadingApp /> : null } 
@@ -107,6 +127,7 @@ function FormTask(props) {
             Guadar Tarea
         </button>
       </div>
+      { props.isUpdate ? btnDeleteTask() : '' }
     </>
   );
 }

@@ -11,14 +11,17 @@ import TaskCard from "./TaskCard"
 const LisTask = () => {
     let [listTask, setListTask] = useState([])
     let [load, setLoad] = useState(false)
+
     useEffect(() => {
         const loadTaskApi = async () => {
+          console.log('--cargando tasks --')
           setLoad(true)
           const resultado = await apiListTask()
           setListTask(resultado)
           setLoad(false)
         }
         loadTaskApi()
+        
     }, [])
 
     return (

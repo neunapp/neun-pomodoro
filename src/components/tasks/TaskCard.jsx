@@ -3,12 +3,20 @@ import { NavLink } from 'react-router-dom';
 import ChangeStateTask from './ChangeStateTask';
 import { CiMenuKebab } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
+
+import { taskConst } from './TaskConst.js';
 import './TaskCard.scss'
 
 function TaskCard(props) {
 
   let [showChangeState, setShowChangeState] = useState(false)
   const openCloseFlotaing = (value) => setShowChangeState(value)
+
+  const getTextByValue = (value) => {
+    const task = taskConst.find(task => task.value === value);
+    return task ? task.text : '--';
+  }
+
   return ( 
     <>
       { 
@@ -35,9 +43,9 @@ function TaskCard(props) {
             href="#" 
             className='task-card__footer__tag'      
             onClick={() => openCloseFlotaing(true)}>
-              { props.task.state }
+              { getTextByValue(props.task.state) }
           </a>
-          <NavLink to={ '/task/update/2' } className='task-card__footer__icon'>
+          <NavLink to={ '/task/update/' + props.task.id } className='task-card__footer__icon'>
             <FaRegEdit style={{ fontSize: 25, marginBottom: -5 }}/>
             </NavLink>
         </div>

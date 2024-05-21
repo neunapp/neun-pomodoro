@@ -20,7 +20,7 @@ function HeaderMain() {
           <a href="/" className='header-main__title'>Pomodoro Neun</a>
         </div>
         <div className='header-main__options'>
-          <a href="#" className='button' onClick={cambiarTema}>Ligth</a>
+          <a href="/task" className='button' onClick={cambiarTema}>Tareas</a>
           <a className="button is-info is-small m-2">Cursos</a>
           <a href="#">
             <figure className="image is-32x32">
