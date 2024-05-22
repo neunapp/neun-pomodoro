@@ -9,7 +9,8 @@ import {
     query, 
     where, 
     limitToLast,
-    orderBy
+    orderBy,
+    updateDoc 
 } from 'firebase/firestore';
 
 export const apiListTask = async () => {
@@ -18,8 +19,8 @@ export const apiListTask = async () => {
     const q = query(
         task, 
         where("state", "==", "0"),
-        orderBy("date_end", "desc"),
-        limitToLast(10)
+        orderBy("date_end", "asc"),
+        limitToLast(15)
     );
     const querySnapshots = await getDocs(q)
     return querySnapshots.docs.map(
@@ -39,5 +40,22 @@ export const apiAddTask = async (task) => {
 
 export const apiDeleteTask = async (taskId) => {
     await deleteDoc(doc(db, 'Task', taskId));
+    return true;
+}
+
+
+export const apiGetTask = async (taskId) => {
+    const docRef = doc(db, 'Task', taskId)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+        return docSnap.data()
+    } else {
+        return null
+    }
+}
+
+export const apiUpdateTask = async (taskId, data) => {
+    const docRef = doc(db, 'Task', taskId)
+    await updateDoc(docRef, data)
     return true;
 }

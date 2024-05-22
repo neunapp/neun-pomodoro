@@ -26,7 +26,7 @@ function TaskCard(props) {
         <div className="task-card__head">
           <div className="task-card__head__left">
             <a href="#" className="task-card__head__left__tag">{ props.task.size }</a>
-            <a href="#" className="task-card__head__left__tag grey">{ props.task.minutes } min</a>
+            {/* <a href="#" className="task-card__head__left__tag grey">{ props.task.minutes } min</a> */}
           </div>
           <a href="#" className="task-card__head__icon">
             <CiMenuKebab />

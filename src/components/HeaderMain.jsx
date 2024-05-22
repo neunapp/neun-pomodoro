@@ -6,7 +6,7 @@ import './HeaderMain.scss'
 
 function HeaderMain() {
 
-  const { user, setDataUser } = useContext(GlobalContext)
+  const { user, _ } = useContext(GlobalContext)
 
   const cambiarTema = () => {
     console.log(getDataUser)

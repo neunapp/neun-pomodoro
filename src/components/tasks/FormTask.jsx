@@ -7,7 +7,7 @@ import { MdOutlineDescription } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
 
 import { GlobalContext } from "../../context/UserProvider";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 //local
 import LoadingApp from '../../apps/LoadingApp';
@@ -40,6 +40,22 @@ function FormTask(props) {
     {'id': 2,'value': '2', 'text': 'Pendiente'},
     {'id': 3,'value': '3', 'text': 'Otro'},
   ]
+
+  useEffect(() => {
+    
+    const getDataUpdate = async () => {
+      if (props.isUpdate && props.dataTask) {
+        console.log('-- asignar datos --')
+        setTitleTask(props.dataTask.title)
+        setdescriptionTask(props.dataTask.description)
+        // setdateTask(format(props.dataTask.date_end, 'yyyy-MM-dd'))
+        setsizeTask(props.dataTask.size)
+        setstateTask(props.dataTask.state)
+        
+      }
+    }  
+    getDataUpdate()
+  }, [props.dataTask])
 
   const saveData = async () => {
     setLoad(true)
