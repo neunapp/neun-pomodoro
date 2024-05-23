@@ -13,3 +13,28 @@ $color-6: #00cec9;
 $color-7: #b2bec3;
 $color-8: #2d3436;
 
+
+$small: 600px;
+$medium: 768px;
+$extra-medium: 960px;
+$large: 1264px;
+$extra-large: 1904px;
+
+
+@mixin desde($size) {
+  @media screen and (min-width: $size){
+    @content;
+  }
+}
+
+@mixin hasta($size) {
+  @media screen and (max-width:$size){
+    @content;
+  }
+}
+
+@mixin desde_hasta($desde,$hasta) {
+  @media screen and (min-width: $desde) and (max-width: $hasta){
+    @content;
+  }
+}

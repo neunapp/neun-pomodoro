@@ -19,8 +19,10 @@ function App() {
   return (
     <GlobalProvider>
       { loadSuccess ? <SuccessApp /> : null}
-      <HeaderMain></HeaderMain>
-      <RouterProvider router={routes} />
+      <div className='content-app'>
+        <RouterProvider router={routes} />
+      </div>
+      
     </GlobalProvider>
   )
 }

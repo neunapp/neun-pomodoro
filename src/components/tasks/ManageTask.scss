@@ -30,6 +30,16 @@
       color: $color-8;
       background: $color-7;
       font-family: $ff-1;
+      font-size: 12px;
+      margin: 3px;
+      @include desde($medium) {
+        font-size: 15px;
+        font-weight: bold;
+      }
+      @include desde($large) {
+        font-size: 16px;
+        font-weight: bold;
+      }
       &:hover {
         background: $color-6;
       }

@@ -8,7 +8,6 @@ import { taskConst } from './TaskConst.js';
 import './TaskCard.scss'
 
 function TaskCard(props) {
-
   let [showChangeState, setShowChangeState] = useState(false)
   const openCloseFlotaing = (value) => setShowChangeState(value)
 
@@ -20,7 +19,7 @@ function TaskCard(props) {
   return ( 
     <>
       { 
-        showChangeState ? <ChangeStateTask closeFunction={openCloseFlotaing} /> : null 
+        showChangeState ? <ChangeStateTask task={props.task} closeFunction={openCloseFlotaing} /> : null 
       }
       <div className="task-card">
         <div className="task-card__head">
@@ -47,7 +46,7 @@ function TaskCard(props) {
           </a>
           <NavLink to={ '/task/update/' + props.task.id } className='task-card__footer__icon'>
             <FaRegEdit style={{ fontSize: 25, marginBottom: -5 }}/>
-            </NavLink>
+          </NavLink>
         </div>
       </div>
     </>

@@ -24,9 +24,9 @@ function ManageTask() {
         </NavLink>
       </div>
       <div className="manage-task__filter">
-        <a href="#" className="manage-task__filter__tag active">En proceso</a>
-        <a href="#" className="manage-task__filter__tag">Pediente</a>
-        <a href="#" className="manage-task__filter__tag">Terminado</a>
+        <NavLink to="/task?paramState=0" className="manage-task__filter__tag active">En proceso</NavLink>
+        <NavLink to="/task?paramState=3" className="manage-task__filter__tag">Pediente</NavLink>
+        <NavLink to="/task?paramState=1" className="manage-task__filter__tag">Terminado</NavLink>
       </div>
       <div className="manage-task__resume">
         <p className="manage-task__resume__text">Completadas: 20</p>

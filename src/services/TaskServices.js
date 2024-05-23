@@ -13,12 +13,15 @@ import {
     updateDoc 
 } from 'firebase/firestore';
 
-export const apiListTask = async () => {
+export const apiListTask = async (state='0') => {
+    if (state == null) {
+        state = '0'
+    }
     const task = collection(db, 'Task')
     //
     const q = query(
         task, 
-        where("state", "==", "0"),
+        where("state", "==", state),
         orderBy("date_end", "asc"),
         limitToLast(15)
     );

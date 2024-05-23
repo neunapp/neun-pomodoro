@@ -1,5 +1,5 @@
 //
-import { format } from 'date-fns';
+import { format, isValid, parseISO } from 'date-fns';
 //
 
 import { BiTask } from "react-icons/bi";
@@ -26,6 +26,7 @@ function FormTask(props) {
   const [dateTask, setdateTask] = useState(ahora)
   const [sizeTask, setsizeTask] = useState('S')
   const [stateTask, setstateTask] = useState('0')
+  const [errorForm, setErrorForm] = useState('')
 
   const optionsSizeTask = [
     {'id': 0,'value': 'S', 'text': 'S - Pequeño'},
@@ -40,6 +41,20 @@ function FormTask(props) {
     {'id': 2,'value': '2', 'text': 'Pendiente'},
     {'id': 3,'value': '3', 'text': 'Otro'},
   ]
+
+  const esFechaValida = (fecha) => {
+    const fechaObjeto = parseISO(fecha);
+    return isValid(fechaObjeto);
+  }
+  const isValidForm = () => {
+    if ((titleTask.trim().length < 4) || (descriptionTask.trim().length < 4) || (!esFechaValida(dateTask))) {
+      setErrorForm('Datos incorrectos...')
+      return false
+    } else {
+      setErrorForm('')
+      return true
+    }
+  }
 
   useEffect(() => {
     
@@ -58,23 +73,26 @@ function FormTask(props) {
   }, [props.dataTask])
 
   const saveData = async () => {
-    setLoad(true)
-    let data = {
-      created: ahora,
-      title: titleTask,
-      description: descriptionTask,
-      date_end: format(dateTask, 'dd-MM-yyyy'),
-      size: sizeTask,
-      user_id: user.id,
-      state: '0'
+    if (isValidForm()) {
+      setLoad(true)
+      let data = {
+        created: ahora,
+        title: titleTask,
+        description: descriptionTask,
+        date_end: format(dateTask, 'dd-MM-yyyy'),
+        size: sizeTask,
+        user_id: user.id,
+        state: '0'
+      }
+      try {
+        await props.saveFunction(data)
+        setLoad(false)
+      } catch (error) {
+        setLoad(false)
+        console.log(error)
+      }
     }
-    try {
-      await props.saveFunction(data)
-      setLoad(false)
-    } catch (error) {
-      setLoad(false)
-      console.log(error)
-    }
+    
   }
 
   const deleteTask = () => {
@@ -122,6 +140,9 @@ function FormTask(props) {
           value={dateTask}
           onChange={(value) => {setdateTask(value)}}
         />
+
+        <p className='is-flex is-justify-content-center has-text-danger'>{ errorForm }</p>
+
         <label className="label">Tamaño:</label>
         <BaseSelectForm 
           options={optionsSizeTask}

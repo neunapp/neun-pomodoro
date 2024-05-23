@@ -1,7 +1,7 @@
 
 import './SuccessApp.scss'
 
-const SuccessApp = ({texto = 'Guarado'}) => {
+const SuccessApp = ({texto = 'Guardado :)'}) => {
   return (
     <div className="success-app">
       <p className="success-app__text">{texto}</p>

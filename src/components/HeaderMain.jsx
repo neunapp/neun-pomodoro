@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
 
+import React, { useContext } from 'react';
 import { GlobalContext } from '../context/UserProvider';
+import { NavLink } from 'react-router-dom';
 
 import './HeaderMain.scss'
 
 function HeaderMain() {
 
-  const { user, _ } = useContext(GlobalContext)
+  const { user } = useContext(GlobalContext)
 
   const cambiarTema = () => {
-    console.log(getDataUser)
     console.log('cambiar temas light/dark');
   }
   
@@ -17,10 +17,10 @@ function HeaderMain() {
     <>
       <div className="header-main">
         <div>
-          <a href="/" className='header-main__title'>Pomodoro Neun</a>
+          <a href="/" className='header-main__title'>Pomodoro</a>
         </div>
         <div className='header-main__options'>
-          <a href="/task" className='button' onClick={cambiarTema}>Tareas</a>
+          <NavLink to="/task" className='button' onClick={cambiarTema}>Tareas</NavLink>
           <a className="button is-info is-small m-2">Cursos</a>
           <a href="#">
             <figure className="image is-32x32">
