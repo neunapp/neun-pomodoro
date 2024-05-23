@@ -1,10 +1,15 @@
 .content-app {
   padding: 1em;
   @include desde($medium) {
-    padding-left: 10em;
-    padding-right: 10em
+    padding-left: 5em;
+    padding-right: 5em
   }
   @include desde($large) {
+    padding-top: 3em;
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+  @include desde($extra-large) {
     padding-top: 3em;
     padding-left: 25%;
     padding-right: 25%;

@@ -1,4 +1,3 @@
-import './Pomodoro.scss'
 import React, { useEffect, useState } from 'react';
 import { MdModeEdit } from "react-icons/md";
 import { MdOutlineRestore } from "react-icons/md";
@@ -7,6 +6,8 @@ import { IoStop } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 //
 import SelectedTask from './tasks/SelectedTask';
+
+import './Pomodoro.scss'
 
 function Pomodoro() {
   let [time, setTime] = useState(20)

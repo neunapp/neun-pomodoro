@@ -1,6 +1,5 @@
 .pomodoro {
   width: 100%;
-  height: 95vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,20 +14,36 @@
     padding: 1em;
   }
   &__clock {
-    width: 300px;
-    height: 300px;
+    width: 250px; /* Usa la dimensión más pequeña para el tamaño */
+    height: 250px;/* Esto asegura que el div sea cuadrado */
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
     border: 2px solid $color-1;
-    margin-bottom: 5em;
+    margin-bottom: 20%;
     box-shadow: 0px 0px 10px 5px #0652DD;
+    @include desde($medium) {
+      width: 300px;
+      height: 300px;
+      margin-bottom: 6%;
+    }
+    @include desde($large) {
+      width: 350px;
+      height: 350px;
+      margin-bottom: 5%;
+    }
+    @include desde($extra-large) {
+      margin-bottom: 10%;
+    }
     &__item {
       display: flex;
       font-family: $ff-1;
       color: $color-3;
-      font-size: 60px;
+      font-size: 45px;
+      @include desde($medium) {
+        font-size: 65px;
+      }
     }
     &__time { 
     }

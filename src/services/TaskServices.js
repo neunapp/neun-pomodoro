@@ -57,6 +57,26 @@ export const apiGetTask = async (taskId) => {
     }
 }
 
+export const apiGetSelectedTask = async () => {
+    const task = collection(db, 'Task')
+    //
+    const q = query(
+        task, 
+        where("state", "==", "2"),
+        orderBy("date_end", "asc"),
+        limitToLast(1)
+    );
+    const querySnapshots = await getDocs(q)
+    return querySnapshots.docs.map(
+        (doc) => {
+             return {
+                id: doc.id,
+                ...doc.data()
+              }
+        } 
+    )
+}
+
 export const apiUpdateTask = async (taskId, data) => {
     const docRef = doc(db, 'Task', taskId)
     await updateDoc(docRef, data)

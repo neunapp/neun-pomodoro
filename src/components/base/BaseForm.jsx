@@ -7,6 +7,7 @@ function BaseForm(props) {
           type={props.tipo} 
           placeholder={props.placeholder}
           value={props.value}
+          maxLength={props.maxLength}
           onChange={(e) => props.onChange(e.target.value)}
         />
         <span className="icon is-small is-left">

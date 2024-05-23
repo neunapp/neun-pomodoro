@@ -124,6 +124,7 @@ function FormTask(props) {
           placeholder="Tarea..." 
           icon={<BiTask />}
           value={titleTask}
+          maxLength="70"
           onChange={(value) => {setTitleTask(value)}}
         />
         <BaseForm
@@ -131,6 +132,7 @@ function FormTask(props) {
           placeholder="Descripcion..."
           icon={<MdOutlineDescription />} 
           value={descriptionTask}
+          maxLength="250"
           onChange={(value) => {setdescriptionTask(value)}}
         />
         <BaseForm

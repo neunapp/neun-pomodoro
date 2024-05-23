@@ -37,20 +37,22 @@ function ChangeStateTask(props) {
         <div className="change-state">
           <a 
             href="#" 
-            className="button is-primary is-light"
-            onClick={() => updateStateTask('3')}>Pendiente</a>
-          <a 
-            href="#" 
             className="button is-info"
             onClick={() => updateStateTask('2')}>En Seleccion</a>
           <a 
             href="#" 
-            className="button has-text-warning"
-            onClick={() => updateStateTask('0')}>En Proceso</a>
-          <a 
-            href="#" 
             className="button is-success"
             onClick={() => updateStateTask('1')}>Terminado</a>
+          <a 
+            href="#" 
+            className="button is-primary is-light"
+            onClick={() => updateStateTask('3')}>Pendiente</a>
+          
+          <a 
+            href="#" 
+            className="button has-text-warning"
+            onClick={() => updateStateTask('0')}>En Proceso</a>
+          
           <a 
             href="#" 
             className="button is-small" 
