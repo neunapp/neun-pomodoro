@@ -1,43 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { MdModeEdit } from "react-icons/md";
 import { MdOutlineRestore } from "react-icons/md";
 import { IoMdPlay } from "react-icons/io";
 import { IoStop } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 //
+import { GlobalContext, initialPomodoro } from '../context/GlobalContext';
+//
+import { formattedTime } from '../utils/pomodoroFormat.js'
+//
 import SelectedTask from './tasks/SelectedTask';
 
 import './Pomodoro.scss'
 
 function Pomodoro() {
-  let [time, setTime] = useState(20)
-  let [seconds, setSeconds] = useState(50)
+  const { timePomodoro, setTimePomodoro, activePomodoro, setActivePomodoro } = useContext(GlobalContext)
+  let [initialColor, setInitialColor] = useState('#0652DD')
   let [isActive, setIsActive] = useState(false)
 
+  const updateTimer = () => {
+    setTimePomodoro(timePomodoro - 1)
+  }
+
   const iniciarCronometro = () => {
-    let value = !isActive
-    setIsActive(value)
+    let value = !activePomodoro
+    setActivePomodoro(value)
+    setInitialColor('#00cec9')
   }
 
   const restartTimer = () => {
-    setSeconds(59)
-    setIsActive(false)
+    setTimePomodoro(initialPomodoro)
+    setActivePomodoro(false)
   }
 
+  const playSound = () => {
+    setInitialColor('#f39c12')
+    const alertSound = new Audio('/sond01.mp3')
+    alertSound.play();
+    setTimeout(() => restartTimer(), 4000)
+  }
 
   useEffect(()=> {
-    let intervalId;
-    if ((seconds > 0)&&(isActive)) {
-      console.log('valor de seconds =', seconds);
-      intervalId = setInterval(() => {
-        setSeconds(prevSeconds => prevSeconds - 1);
-        }, 1000);
-    } else {
-      console.log('seconds == 0');
-      clearInterval(intervalId);
+    if ((timePomodoro > 0) && (activePomodoro) ) {
+      const intervalId = setInterval(() => {
+        updateTimer()
+      }, 1000)
+      return () => clearInterval(intervalId)
+    } else if (timePomodoro === 0) {
+      setActivePomodoro(false)
+      console.log('tiempo en cero')
+      playSound()
     }
-    
-    return () => clearInterval(intervalId);
   })
 
 
@@ -50,11 +63,9 @@ function Pomodoro() {
             ruta="/task"
             child={<CiEdit style={{ fontSize: 30, marginBottom: -5 }}/>}
           />
-          <div className="pomodoro__clock">
+          <div className="pomodoro__clock" style={{boxShadow: `0px 0px 10px 5px ${initialColor}`}}>
             <p className="pomodoro__clock__item">
-              <span className="pomodoro__clock__time">{ time }</span>
-              <span className="pomodoro__clock__time">:</span>
-              <span className="pomodoro__clock__time">{seconds}</span>
+              <span className="pomodoro__clock__time">{ formattedTime(timePomodoro) }</span>
             </p>
           </div>
           <div className="pomodoro__ctrls">

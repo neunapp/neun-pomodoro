@@ -6,7 +6,7 @@ import { BiTask } from "react-icons/bi";
 import { MdOutlineDescription } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
 
-import { GlobalContext } from "../../context/UserProvider";
+import { GlobalContext } from "../../context/GlobalContext";
 import { useState, useContext, useEffect } from "react";
 
 //local

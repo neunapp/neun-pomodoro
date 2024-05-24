@@ -6,6 +6,7 @@
   background: $color-2;
   padding: 5px 15px;
   margin-bottom: 20%;
+  min-width: 200px;
   @include desde($medium) {
     margin-bottom: 6%;
   }
