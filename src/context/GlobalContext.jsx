@@ -1,9 +1,9 @@
 import React, { createContext, useState } from 'react';
+//
+import { getTimeStorage } from '../services/TimePomodoroData.js';
 
 // creamos un contexo global
 const GlobalContext = createContext();
-
-export const initialPomodoro = 25*60
 
 const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState({
@@ -11,10 +11,13 @@ const GlobalProvider = ({ children }) => {
     'id':'U00008',
     'avatar': 'https://picsum.photos/id/101/200/200'
   })
-
+  // funcion inicial
+  const initialPomodoro = getTimeStorage()
   // setea el tiempo de concentracion del usuario
-  const [timePomodoro, setTimePomodoro] = useState(initialPomodoro)
+  const [timePomodoro, setTimePomodoro] = useState(initialPomodoro.time)
   const [activePomodoro, setActivePomodoro] = useState(false)
+
+
 
   const setDataUser = (newUser) => {
     setUser(newUser)

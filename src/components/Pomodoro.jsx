@@ -5,18 +5,20 @@ import { IoMdPlay } from "react-icons/io";
 import { IoStop } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 //
-import { GlobalContext, initialPomodoro } from '../context/GlobalContext';
+import { GlobalContext } from '../context/GlobalContext';
+import { getTimeStorage } from '../services/TimePomodoroData';
 //
 import { formattedTime } from '../utils/pomodoroFormat.js'
 //
-import SelectedTask from './tasks/SelectedTask';
+import SelectedTask from './tasks/SelectedTask'
+import ChangeTimePomodoro from './ChangeTimePomodoro'
 
 import './Pomodoro.scss'
 
 function Pomodoro() {
   const { timePomodoro, setTimePomodoro, activePomodoro, setActivePomodoro } = useContext(GlobalContext)
   let [initialColor, setInitialColor] = useState('#0652DD')
-  let [isActive, setIsActive] = useState(false)
+  let [isEdit, setIsEdit] = useState(false)
 
   const updateTimer = () => {
     setTimePomodoro(timePomodoro - 1)
@@ -29,7 +31,7 @@ function Pomodoro() {
   }
 
   const restartTimer = () => {
-    setTimePomodoro(initialPomodoro)
+    setTimePomodoro(getTimeStorage().time)
     setActivePomodoro(false)
   }
 
@@ -38,6 +40,14 @@ function Pomodoro() {
     const alertSound = new Audio('/sond01.mp3')
     alertSound.play();
     setTimeout(() => restartTimer(), 4000)
+  }
+
+  const editTimePomodoro = () => {
+    setIsEdit(true)
+  }
+
+  const closeEditTime = () => {
+    setIsEdit(false)
   }
 
   useEffect(()=> {
@@ -72,17 +82,20 @@ function Pomodoro() {
             <button className="pomodoro__ctrls__btn" onClick={restartTimer}>
               <MdOutlineRestore />
             </button>
-            <button className="pomodoro__ctrls__btn">
-              <MdModeEdit />
+            <button 
+              className="pomodoro__ctrls__btn"
+              onClick={editTimePomodoro}>
+                <MdModeEdit />
             </button>
           </div>
           <button className="pomodoro__ctrls__btn play" onClick={iniciarCronometro}>
             {
-              isActive ? <IoStop style={{ fontSize: 40, }}/> : <IoMdPlay style={{ fontSize: 40, }}/>
+              activePomodoro ? <IoStop style={{ fontSize: 40, }}/> : <IoMdPlay style={{ fontSize: 40, }}/>
             }
           </button>
         </div>
       </div>
+      { isEdit ? <ChangeTimePomodoro closeFuntion={closeEditTime} /> : null }
     </>
   )
 
