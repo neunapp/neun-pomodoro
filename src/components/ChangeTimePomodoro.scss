@@ -22,4 +22,8 @@
       border: 1px solid $color-3;
     }
   }
+  &__footer {
+    display: flex;
+    justify-content: center;
+  }
 }

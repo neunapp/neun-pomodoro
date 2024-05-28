@@ -1,0 +1,30 @@
+.progress-bar {
+  margin: 10px;
+  padding: 10px;
+  &__text {
+    font-family: $ff-1;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  &__ctrls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__range {
+      width: 100%;
+      cursor: pointer;
+    }
+    &__lbl {
+      display: block;
+      width: 60px;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      background: $color-8;
+      border: 1px solid $color-3;
+      color: $color-3;
+      font-weight: bold;
+      margin: 10px;
+    }
+  }
+}

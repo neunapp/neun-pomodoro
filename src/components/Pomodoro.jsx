@@ -4,6 +4,7 @@ import { MdOutlineRestore } from "react-icons/md";
 import { IoMdPlay } from "react-icons/io";
 import { IoStop } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
+import { BsClipboardCheckFill } from "react-icons/bs";
 //
 import { GlobalContext } from '../context/GlobalContext';
 import { getTimeStorage } from '../services/TimePomodoroData';
@@ -12,6 +13,7 @@ import { formattedTime } from '../utils/pomodoroFormat.js'
 //
 import SelectedTask from './tasks/SelectedTask'
 import ChangeTimePomodoro from './ChangeTimePomodoro'
+import CheckPomodoro from './CheckPomodoro';
 
 import './Pomodoro.scss'
 
@@ -19,6 +21,7 @@ function Pomodoro() {
   const { timePomodoro, setTimePomodoro, activePomodoro, setActivePomodoro } = useContext(GlobalContext)
   let [initialColor, setInitialColor] = useState('#0652DD')
   let [isEdit, setIsEdit] = useState(false)
+  let [isCheck, setIsCheck] = useState(false)
 
   const updateTimer = () => {
     setTimePomodoro(timePomodoro - 1)
@@ -28,6 +31,7 @@ function Pomodoro() {
     let value = !activePomodoro
     setActivePomodoro(value)
     setInitialColor('#00cec9')
+    setIsCheck(false)
   }
 
   const restartTimer = () => {
@@ -39,7 +43,12 @@ function Pomodoro() {
     setInitialColor('#f39c12')
     const alertSound = new Audio('/sond01.mp3')
     alertSound.play();
-    setTimeout(() => restartTimer(), 4000)
+    setTimeout(() => setTimePomodoro(getTimeStorage().pause), 4000)
+  }
+
+  const chekCiclePomodoro = () => {
+    console.log('terminar ciclo?')
+    setIsCheck(true)
   }
 
   const editTimePomodoro = () => {
@@ -48,6 +57,12 @@ function Pomodoro() {
 
   const closeEditTime = () => {
     setIsEdit(false)
+    setIsCheck(false)
+  }
+
+  const finishCiclePomodoro = () => {
+    console.log('reiniciar cilo pomodoro');
+    setIsCheck(false)
   }
 
   useEffect(()=> {
@@ -79,14 +94,23 @@ function Pomodoro() {
             </p>
           </div>
           <div className="pomodoro__ctrls">
+            { isCheck ? <CheckPomodoro  closeFunction={() => setIsCheck(false)} okFunction={finishCiclePomodoro} /> : null}
             <button className="pomodoro__ctrls__btn" onClick={restartTimer}>
               <MdOutlineRestore />
             </button>
+            
             <button 
               className="pomodoro__ctrls__btn"
               onClick={editTimePomodoro}>
                 <MdModeEdit />
+              
             </button>
+            <button 
+              className="pomodoro__ctrls__btn" 
+              onClick={chekCiclePomodoro}>
+              <BsClipboardCheckFill style={{ fontSize: 20, }}/>
+            </button>
+            
           </div>
           <button className="pomodoro__ctrls__btn play" onClick={iniciarCronometro}>
             {
@@ -96,6 +120,7 @@ function Pomodoro() {
         </div>
       </div>
       { isEdit ? <ChangeTimePomodoro closeFuntion={closeEditTime} /> : null }
+      
     </>
   )
 

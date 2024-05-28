@@ -1,0 +1,38 @@
+.alert-card {
+  position: absolute;
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  bottom: 60px;
+  right: -100px;
+  &__text {
+    font-family: $ff-2;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  &__btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__btn {
+    display: block;
+    min-width: 40px;
+    padding: 5px;
+    background: $color-2;
+    margin: 5px;
+    border-radius: 10px;
+    color: $color-8;
+    font-family: $ff-1;
+    font-size: 14px;
+    &:hover {
+      opacity: 0.6;
+    }
+    &.secondary {
+      background-color: $color-7;
+    }
+  }
+}

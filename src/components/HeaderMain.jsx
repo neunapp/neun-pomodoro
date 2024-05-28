@@ -54,7 +54,7 @@ function HeaderMain() {
         <div className='header-main__options'>
           <NavLink to="/task" className='button' onClick={cambiarTema}>Tareas</NavLink>
           <a className="button is-info is-small m-2">Cursos</a>
-          <a href="#">
+          <NavLink to="/users/login/">
             <figure className="image is-32x32">
             <img
               className='is-rounded'
@@ -62,7 +62,7 @@ function HeaderMain() {
               alt="Placeholder image"
             />
           </figure>
-          </a>
+          </NavLink>
         </div>
       </div>
     </>

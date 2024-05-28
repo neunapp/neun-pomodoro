@@ -1,0 +1,28 @@
+import './ProgressBarManual.scss'
+
+const ProgressBarManualApp = (props) => {
+
+  const handleChange = (event) => {
+    console.log(event.target.value)
+    props.stateObj.setValue(event.target.value)
+  }
+
+  return(
+    <div className="progress-bar">
+      <label className="progress-bar__text">{props.text}</label>
+      <div className="progress-bar__ctrls">
+        <input 
+          type="range" 
+          min="0" 
+          max={props.max}
+          value={props.stateObj.value}
+          onChange={handleChange}
+          className="progress-bar__ctrls__range" />
+        <p className='progress-bar__ctrls__lbl'>{ props.stateObj.value }</p>
+      </div>
+      
+    </div>
+  )
+}
+
+export default ProgressBarManualApp

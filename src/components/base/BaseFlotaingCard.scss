@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   &__body {
-    width: 65%;
+    max-width: 65%;
     min-height: 200px;
     background: $color-8;
     border-radius: 10px;
