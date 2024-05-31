@@ -4,7 +4,7 @@ const ProgressBarManualApp = (props) => {
 
   const handleChange = (event) => {
     console.log(event.target.value)
-    props.stateObj.setValue(event.target.value)
+    props.stateObj.setValue(parseFloat(event.target.value))
   }
 
   return(
@@ -13,7 +13,7 @@ const ProgressBarManualApp = (props) => {
       <div className="progress-bar__ctrls">
         <input 
           type="range" 
-          min="0" 
+          min={props.min}
           max={props.max}
           value={props.stateObj.value}
           onChange={handleChange}

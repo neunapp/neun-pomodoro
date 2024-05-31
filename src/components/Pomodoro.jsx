@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { format } from 'date-fns'
+
+import React, { useState, useContext } from 'react';
 import { MdModeEdit } from "react-icons/md";
 import { MdOutlineRestore } from "react-icons/md";
 import { IoMdPlay } from "react-icons/io";
@@ -7,9 +9,12 @@ import { CiEdit } from "react-icons/ci";
 import { BsClipboardCheckFill } from "react-icons/bs";
 //
 import { GlobalContext } from '../context/GlobalContext';
-import { getTimeStorage } from '../services/TimePomodoroData';
+import { apiAddTimes } from '../services/TimesServices.js'
+import { getTimeStorage, saveNewTimePomodoroStorage } from '../services/TimePomodoroData';
 //
 import { formattedTime } from '../utils/pomodoroFormat.js'
+//
+import usePomodoroCtrls from '../hooks/usePomodoroCtrls';
 //
 import SelectedTask from './tasks/SelectedTask'
 import ChangeTimePomodoro from './ChangeTimePomodoro'
@@ -18,14 +23,24 @@ import CheckPomodoro from './CheckPomodoro';
 import './Pomodoro.scss'
 
 function Pomodoro() {
-  const { timePomodoro, setTimePomodoro, activePomodoro, setActivePomodoro } = useContext(GlobalContext)
-  let [initialColor, setInitialColor] = useState('#0652DD')
+  const { 
+    user,
+    timePomodoro, 
+    activePomodoro, 
+    setActivePomodoro, 
+    isBreack,
+    counterCicle,
+    setCounterCicle,
+    initialColor,
+    setInitialColor } = useContext(GlobalContext)
+  
   let [isEdit, setIsEdit] = useState(false)
   let [isCheck, setIsCheck] = useState(false)
-
-  const updateTimer = () => {
-    setTimePomodoro(timePomodoro - 1)
-  }
+  // hook
+  const {  
+    restartTimer, 
+    saveTimeCompleted
+  } = usePomodoroCtrls()
 
   const iniciarCronometro = () => {
     let value = !activePomodoro
@@ -34,21 +49,48 @@ function Pomodoro() {
     setIsCheck(false)
   }
 
-  const restartTimer = () => {
-    setTimePomodoro(getTimeStorage().time)
-    setActivePomodoro(false)
-  }
-
-  const playSound = () => {
-    setInitialColor('#f39c12')
-    const alertSound = new Audio('/sond01.mp3')
-    alertSound.play();
-    setTimeout(() => setTimePomodoro(getTimeStorage().pause), 4000)
-  }
-
   const chekCiclePomodoro = () => {
     console.log('terminar ciclo?')
+    setActivePomodoro(false)
     setIsCheck(true)
+  }
+
+  const finishCiclePomodoro = () => {
+    
+    // guardamos si es necesario
+    let objPomodoro = getTimeStorage()
+    // variable que representa id fecha
+    const hoy = format(new Date(), 'dd-MM-yyyy')
+    let date = format(new Date(), 'yyyyMMdd') + user.user_id.toString()
+    let timeConsumed = 0
+    if (!isBreack && activePomodoro) {
+      timeConsumed = objPomodoro.time - timePomodoro
+    }
+    // recuperamos el tiempo consumido
+    if (date != objPomodoro.date) {
+      if (objPomodoro.date != null) {
+        // fechas diferentes, guardar 
+        let data = {'date': hoy, 'time': objPomodoro.timeday + timeConsumed, 'user': user.user_id}
+        console.log('guarado datos en la nube 1', objPomodoro.time, timePomodoro, data);
+        apiAddTimes(data)
+      }
+      
+    } else {
+      let data = {'date': hoy, 'time': objPomodoro.timeday + timeConsumed, 'user': user.user_id}
+      console.log('guarado datos en la nube 2', objPomodoro.timeday, timePomodoro, data);
+      apiAddTimes(data)
+    }
+    console.log('reiniciar cilo pomodoro');
+    restartTimer()
+    setCounterCicle(1)
+    setIsCheck(false)
+    saveNewTimePomodoroStorage(
+      objPomodoro.time/60,
+      objPomodoro.pause/60,
+      objPomodoro.cicle,
+      0,
+      null
+    )
   }
 
   const editTimePomodoro = () => {
@@ -60,23 +102,7 @@ function Pomodoro() {
     setIsCheck(false)
   }
 
-  const finishCiclePomodoro = () => {
-    console.log('reiniciar cilo pomodoro');
-    setIsCheck(false)
-  }
-
-  useEffect(()=> {
-    if ((timePomodoro > 0) && (activePomodoro) ) {
-      const intervalId = setInterval(() => {
-        updateTimer()
-      }, 1000)
-      return () => clearInterval(intervalId)
-    } else if (timePomodoro === 0) {
-      setActivePomodoro(false)
-      console.log('tiempo en cero')
-      playSound()
-    }
-  })
+  
 
 
   return (
@@ -92,7 +118,23 @@ function Pomodoro() {
             <p className="pomodoro__clock__item">
               <span className="pomodoro__clock__time">{ formattedTime(timePomodoro) }</span>
             </p>
+            <div className="pomodoro__clock__cicle">
+            { (!isBreack && activePomodoro) ?
+                [...Array(counterCicle)].map((_, i) => (
+                  <span key={i} className='pomodoro__clock__cicle__item'></span>
+                ))
+              : null
+            }
+            </div>
+            
           </div>
+
+          {/* <p className='pomodoro__report'>{(isBreack) ? '¡Hora de estirar las piernas!':'¡Hora de brillar!'}</p> */}
+          { (isBreack) ? 
+            <p className='pomodoro__report animate'>¡Hora de estirar las piernas!</p> 
+            : <p className='pomodoro__report'>¡Hora de brillar! </p>
+          }
+
           <div className="pomodoro__ctrls">
             { isCheck ? <CheckPomodoro  closeFunction={() => setIsCheck(false)} okFunction={finishCiclePomodoro} /> : null}
             <button className="pomodoro__ctrls__btn" onClick={restartTimer}>

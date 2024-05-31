@@ -1,34 +1,31 @@
 
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../context/GlobalContext';
 import { NavLink } from 'react-router-dom';
 //
 import { formattedTime } from '../utils/pomodoroFormat.js'
+// hooks
+import usePomodoroCtrls from '../hooks/usePomodoroCtrls';
 
 import './HeaderMain.scss'
 
 function HeaderMain() {
+  const { 
+    timePomodoro,
+    updateTimer,
+    playSound,
+    saveTimeCompleted
+  } = usePomodoroCtrls()
 
-  const { user, timePomodoro, setTimePomodoro, activePomodoro, setActivePomodoro } = useContext(GlobalContext)
-  let [initialTime, setInitialTime] = useState(timePomodoro)
+  const { 
+    user,
+    activePomodoro,
+    setActivePomodoro,
+    isBreack,
+    setIsBreake, } = useContext(GlobalContext)
 
   const cambiarTema = () => {
     console.log('cambiar temas light/dark');
-  }
-  
-  const updateTimer = () => {
-    setTimePomodoro(timePomodoro - 1)
-  }
-
-  const restartTimer = () => {
-    setTimePomodoro(initialTime)
-    setActivePomodoro(false)
-  }
-
-  const playSound = () => {
-    const alertSound = new Audio('/sond01.mp3')
-    alertSound.play();
-    setTimeout(() => restartTimer(), 4000)
   }
 
   useEffect(()=> {
@@ -37,12 +34,15 @@ function HeaderMain() {
         updateTimer()
       }, 1000)
       return () => clearInterval(intervalId)
-    } else if (timePomodoro === 0) {
+    } else if ((timePomodoro === 0) && (activePomodoro)) {
       setActivePomodoro(false)
-      console.log('tiempo en cero')
+      if (isBreack == false) {
+        saveTimeCompleted(user.user_id)
+      }
       playSound()
     }
-  })
+    
+  }, [timePomodoro, activePomodoro])
 
   return (
     <>
@@ -58,7 +58,7 @@ function HeaderMain() {
             <figure className="image is-32x32">
             <img
               className='is-rounded'
-              src={user.avatar}
+              src={user.photo}
               alt="Placeholder image"
             />
           </figure>

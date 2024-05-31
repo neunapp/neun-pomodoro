@@ -4,12 +4,14 @@ import { useSearchParams } from 'react-router-dom';
 // components
 import LoadingApp from '../../apps/LoadingApp';
 // services
-import { apiListTask } from '../../services/TaskServices.js'
+import { apiListUsersTasks } from '../../services/TaskServices.js'
+import { getUserStorage } from "../../services/userServices.js";
 //
 import TaskCard from "./TaskCard"
 
 
 const LisTask = () => {
+    const user = getUserStorage()
     const [searchParams] = useSearchParams();
 
     let [listTask, setListTask] = useState([])
@@ -17,10 +19,10 @@ const LisTask = () => {
 
     useEffect(() => {
         const loadTaskApi = async () => {
-          console.log('--cargando tasks --')
+          console.log('--cargando tasks --', searchParams.get('paramState'))
           const paramstate = searchParams.get('paramState');
           setLoad(true)
-          const resultado = await apiListTask(paramstate)
+          const resultado = await apiListUsersTasks(user, paramstate)
           setListTask(resultado)
           setLoad(false)
         }

@@ -81,7 +81,7 @@ function FormTask(props) {
         description: descriptionTask,
         date_end: format(dateTask, 'dd-MM-yyyy'),
         size: sizeTask,
-        user_id: user.id,
+        user_id: user.user_id,
         state: '0'
       }
       try {

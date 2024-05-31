@@ -6,14 +6,15 @@ import { useState, useEffect, useContext } from 'react'
 // context
 import {  SuccessContext } from '../../context/SuccessContext'
 // services
-import { apiDeleteTask } from "../../services/TaskServices"
-import { apiGetTask } from "../../services/TaskServices";
-import { apiUpdateTask } from '../../services/TaskServices';
+import { apiDeleteTasksUser } from "../../services/TaskServices"
+import { apiRetriveTask, apiUpdateTasksUser } from "../../services/TaskServices";
+import { getUserStorage } from "../../services/userServices.js";
 // local apss
 import LoadingApp from '../../apps/LoadingApp';
 import FormTask from "./FormTask";
 
 const UpdateFormTask = () => {
+  const currentUser = getUserStorage()
   const { 
     _,
     setLoadSuccess
@@ -35,7 +36,7 @@ const UpdateFormTask = () => {
     const loadTask = async () => {
       setLoad(true)
       console.log('-- retive task --')
-      const response = await apiGetTask(params.idTask)
+      const response = await apiRetriveTask(currentUser, params.idTask)
       setDataTask(response)
       setLoad(false)
     }  
@@ -45,7 +46,7 @@ const UpdateFormTask = () => {
   const updateDataTask = async (data) => {
     console.log('actualizando');
     
-    await apiUpdateTask(params.idTask, data)
+    await apiUpdateTasksUser(currentUser, params.idTask, data)
     setLoadSuccess(true)
     setInterval(() => {
       setLoadSuccess(false)
@@ -54,7 +55,7 @@ const UpdateFormTask = () => {
   }
 
   const deleteTask = () => {
-    apiDeleteTask(params.idTask)
+    apiDeleteTasksUser(currentUser, params.idTask)
     navigate("/task");
   }
 

@@ -4,14 +4,15 @@ import { NavLink } from 'react-router-dom';
 // apps
 import LoadingApp from '../../apps/LoadingApp';
 // services
-import { apiGetSelectedTask, apiUpdateTask } from '../../services/TaskServices.js'
+import { getUserStorage } from "../../services/userServices.js";
+import { apiGetSelectedTaskUser, apiUpdateTasksUser } from '../../services/TaskServices.js'
 // components
 import CompleteTask from './CompleteTask';
 import './SelectedTask.scss'
 
 
 function SelectedTask(props) {
-
+  const currentUser = getUserStorage()
   let [showChange, setShowChange] = useState(false)
   let [selectTask, setSelectTask] = useState({'title':'...'})
   let [load, setLoad] = useState(false)
@@ -22,7 +23,7 @@ function SelectedTask(props) {
 
   const retiveSelectedTask = async () => {
     setLoad(true)
-    const task = await apiGetSelectedTask()
+    const task = await apiGetSelectedTaskUser(currentUser)
     if (task.length > 0) {
       setSelectTask(task[0])
     } else {
@@ -35,7 +36,7 @@ function SelectedTask(props) {
   const updateCompleteTask = async () => {
     if (selectTask.id) {
       setLoad(true)
-      const response = await apiUpdateTask(selectTask.id, {'state':'1'})
+      const response = await apiUpdateTasksUser(currentUser, selectTask.id, {'state':'1'})
       if (response) {
         retiveSelectedTask()
       }

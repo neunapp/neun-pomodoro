@@ -1,37 +1,38 @@
 import React, { createContext, useState } from 'react';
 //
 import { getTimeStorage } from '../services/TimePomodoroData.js';
+import { getUserStorage } from '../services/userServices.js';
 
 // creamos un contexo global
 const GlobalContext = createContext();
+const initialPomodoro = getTimeStorage()
 
 const GlobalProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    'email': 'prueba@gmail.com', 
-    'id':'U00008',
-    'avatar': 'https://picsum.photos/id/101/200/200'
-  })
+  const [user, setUser] = useState(getUserStorage())
   // funcion inicial
-  const initialPomodoro = getTimeStorage()
+  
   // setea el tiempo de concentracion del usuario
   const [timePomodoro, setTimePomodoro] = useState(initialPomodoro.time)
   const [activePomodoro, setActivePomodoro] = useState(false)
-
-
-
-  const setDataUser = (newUser) => {
-    setUser(newUser)
-  }
+  const [isBreack, setIsBreake] = useState(false)
+  const [counterCicle, setCounterCicle] = useState(1)
+  const [initialColor, setInitialColor] = useState('#0652DD')
 
 
   return (
     <GlobalContext.Provider value={{ 
       user, 
-      setDataUser, 
+      setUser, 
       timePomodoro, 
       setTimePomodoro,
       activePomodoro,
-      setActivePomodoro, 
+      setActivePomodoro,
+      isBreack,
+      setIsBreake,
+      counterCicle,
+      setCounterCicle,
+      initialColor,
+      setInitialColor
     }}>
         {children}
     </GlobalContext.Provider>

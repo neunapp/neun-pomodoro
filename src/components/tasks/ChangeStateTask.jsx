@@ -5,12 +5,14 @@ import BaseFlotaingCard from "../base/BaseFlotaingCard"
 import {  SuccessContext } from '../../context/SuccessContext'
 import LoadingApp from '../../apps/LoadingApp';
 // servicios
-import { apiUpdateTask } from '../../services/TaskServices.js'
+import { getUserStorage } from "../../services/userServices.js";
+import { apiUpdateTasksUser } from '../../services/TaskServices.js'
 import './ChangeStateTask.scss'
 
 
 function ChangeStateTask(props) {
   const navigate = useNavigate();
+  const currentUser = getUserStorage()
   const { setLoadSuccess } = useContext(SuccessContext)
   const [ load, setLoad ] = useState(false)
 
@@ -19,7 +21,7 @@ function ChangeStateTask(props) {
   const updateStateTask = async (state) => {
     console.log('actualizando');
     setLoad(true)
-    await apiUpdateTask(props.task.id, {'state': state})
+    await apiUpdateTasksUser(currentUser, props.task.id, {'state': state})
     closeFlotaing()
     setLoad(false)
     setLoadSuccess(true)
