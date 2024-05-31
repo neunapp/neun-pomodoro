@@ -1,20 +1,17 @@
 import { format } from 'date-fns'
-import React, { useContext, useState,} from "react"
+import { useContext, useState,} from "react"
 
 import { apiAddTinesUser } from '../services/TimesServices.js'
 import { GlobalContext } from '../context/GlobalContext';
 import { getTimeStorage, saveNewTimePomodoroStorage } from '../services/TimePomodoroData';
-import { getUserStorage } from "../services/userServices.js";
 
 const usePomodoroCtrls = () => {
-  const currentUser = getUserStorage()
   const { 
     user, 
     initialColor,
     setInitialColor,
     timePomodoro, 
     setTimePomodoro,
-    activePomodoro, 
     setActivePomodoro,
     isBreack,
     setIsBreake,
@@ -41,7 +38,7 @@ const usePomodoroCtrls = () => {
     const hoy = format(new Date(), 'dd-MM-yyyy');
     let data = {'date': hoy, 'time': localData.timeday, 'user': user.user_id}
     console.log('guarado datos en la nube', data);
-    apiAddTinesUser(currentUser, data)
+    apiAddTinesUser(user, data)
     //
   }
 

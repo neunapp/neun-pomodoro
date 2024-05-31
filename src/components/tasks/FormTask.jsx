@@ -77,6 +77,7 @@ function FormTask(props) {
       setLoad(true)
       let data = {
         created: ahora,
+        date_update: ahora,
         title: titleTask,
         description: descriptionTask,
         date_end: format(dateTask, 'dd-MM-yyyy'),

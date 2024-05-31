@@ -5,16 +5,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from 'react'
 // context
 import {  SuccessContext } from '../../context/SuccessContext'
+import { GlobalContext } from '../../context/GlobalContext.jsx';
 // services
 import { apiDeleteTasksUser } from "../../services/TaskServices"
 import { apiRetriveTask, apiUpdateTasksUser } from "../../services/TaskServices";
-import { getUserStorage } from "../../services/userServices.js";
 // local apss
 import LoadingApp from '../../apps/LoadingApp';
 import FormTask from "./FormTask";
 
 const UpdateFormTask = () => {
-  const currentUser = getUserStorage()
+  const { user } = useContext(GlobalContext)
   const { 
     _,
     setLoadSuccess
@@ -35,8 +35,7 @@ const UpdateFormTask = () => {
   useEffect(() => {
     const loadTask = async () => {
       setLoad(true)
-      console.log('-- retive task --')
-      const response = await apiRetriveTask(currentUser, params.idTask)
+      const response = await apiRetriveTask(user, params.idTask)
       setDataTask(response)
       setLoad(false)
     }  
@@ -44,9 +43,8 @@ const UpdateFormTask = () => {
   }, [])
 
   const updateDataTask = async (data) => {
-    console.log('actualizando');
     
-    await apiUpdateTasksUser(currentUser, params.idTask, data)
+    await apiUpdateTasksUser(user, params.idTask, data)
     setLoadSuccess(true)
     setInterval(() => {
       setLoadSuccess(false)
@@ -55,7 +53,7 @@ const UpdateFormTask = () => {
   }
 
   const deleteTask = () => {
-    apiDeleteTasksUser(currentUser, params.idTask)
+    apiDeleteTasksUser(user, params.idTask)
     navigate("/task");
   }
 

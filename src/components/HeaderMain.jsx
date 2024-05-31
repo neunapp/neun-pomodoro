@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { formattedTime } from '../utils/pomodoroFormat.js'
 // hooks
 import usePomodoroCtrls from '../hooks/usePomodoroCtrls';
+import logoImg from '../assets/pomodoro.png'
 
 import './HeaderMain.scss'
 
@@ -21,8 +22,7 @@ function HeaderMain() {
     user,
     activePomodoro,
     setActivePomodoro,
-    isBreack,
-    setIsBreake, } = useContext(GlobalContext)
+    isBreack,} = useContext(GlobalContext)
 
   const cambiarTema = () => {
     console.log('cambiar temas light/dark');
@@ -56,11 +56,16 @@ function HeaderMain() {
           <a className="button is-info is-small m-2">Cursos</a>
           <NavLink to="/users/login/">
             <figure className="image is-32x32">
-            <img
+            { user ? <img
               className='is-rounded'
               src={user.photo}
               alt="Placeholder image"
-            />
+            /> : <img
+              className='is-rounded'
+              src={logoImg}
+              alt="Placeholder image"
+            /> }
+            
           </figure>
           </NavLink>
         </div>

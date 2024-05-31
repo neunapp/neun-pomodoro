@@ -1,3 +1,4 @@
+
 import { db } from  './FirebaseConfig.js'
 import { 
     collection,
@@ -207,5 +208,21 @@ export const apiDeleteTasksUser = async (currentUser, taskID, dataTask) => {
         
     } else {
         console.log('error: no hay un usuario')
+    }
+}
+
+
+export const apiCountTasksCompleted = async (currentUser) => {
+    if (currentUser) {
+        const tasksCollection = collection(db, 'users', currentUser.user_id, 'tasks')
+        const q = query(
+            tasksCollection, 
+            where('state','==', '1'),
+            orderBy("date_end", "asc"),
+        )
+        // const querySnapshots = await getDocs(q)
+        //
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.size
     }
 }

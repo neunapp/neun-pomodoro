@@ -8,7 +8,7 @@ const appId = import.meta.env.VITE_FIREBASE_APP_ID;
 //
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: apiKey,
@@ -23,5 +23,16 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-export { db, auth };
+const logout = () => {
+  signOut(auth)
+    .then(() => {
+      console.log('Sesión cerrada');
+      // Actualizar el estado de la aplicación o redirigir al usuario
+    })
+    .catch((error) => {
+      console.error('Error al cerrar sesión:', error);
+    });
+};
+
+export { db, auth, logout }
 export default app

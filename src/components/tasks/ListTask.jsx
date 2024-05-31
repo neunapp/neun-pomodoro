@@ -1,17 +1,18 @@
 //
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useSearchParams } from 'react-router-dom';
 // components
 import LoadingApp from '../../apps/LoadingApp';
+//
+import { GlobalContext } from '../../context/GlobalContext';
 // services
 import { apiListUsersTasks } from '../../services/TaskServices.js'
-import { getUserStorage } from "../../services/userServices.js";
 //
 import TaskCard from "./TaskCard"
 
 
 const LisTask = () => {
-    const user = getUserStorage()
+    const { user } = useContext(GlobalContext)
     const [searchParams] = useSearchParams();
 
     let [listTask, setListTask] = useState([])

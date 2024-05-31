@@ -1,18 +1,19 @@
+import { format } from 'date-fns';
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BaseFlotaingCard from "../base/BaseFlotaingCard"
 // apps
 import {  SuccessContext } from '../../context/SuccessContext'
+import { GlobalContext } from '../../context/GlobalContext.jsx';
 import LoadingApp from '../../apps/LoadingApp';
 // servicios
-import { getUserStorage } from "../../services/userServices.js";
 import { apiUpdateTasksUser } from '../../services/TaskServices.js'
 import './ChangeStateTask.scss'
 
 
 function ChangeStateTask(props) {
   const navigate = useNavigate();
-  const currentUser = getUserStorage()
+  const { user } = useContext(GlobalContext)
   const { setLoadSuccess } = useContext(SuccessContext)
   const [ load, setLoad ] = useState(false)
 
@@ -20,8 +21,9 @@ function ChangeStateTask(props) {
 
   const updateStateTask = async (state) => {
     console.log('actualizando');
+    const ahora = format(new Date(), 'yyyy-MM-dd')
     setLoad(true)
-    await apiUpdateTasksUser(currentUser, props.task.id, {'state': state})
+    await apiUpdateTasksUser(user, props.task.id, {'state': state, 'date_update': ahora})
     closeFlotaing()
     setLoad(false)
     setLoadSuccess(true)
