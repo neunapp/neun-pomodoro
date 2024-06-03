@@ -16,8 +16,8 @@ export const apiAddTimes = async (timeObj) => {
     return docRef
 }
 
-export const apiAddTinesUser = async (currentUser, dataTime) => {
-    if (currentUser) {
+export const apiAddTimesUser = async (currentUser, dataTime) => {
+    if ((currentUser) && (dataTime.time > 0)) {
         try {
             // referencia a la coleccion del usuario
             const userRef = doc(db, 'users', currentUser.user_id)

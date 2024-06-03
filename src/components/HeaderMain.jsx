@@ -37,7 +37,7 @@ function HeaderMain() {
     } else if ((timePomodoro === 0) && (activePomodoro)) {
       setActivePomodoro(false)
       if (isBreack == false) {
-        saveTimeCompleted(user.user_id)
+        saveTimeCompleted()
       }
       playSound()
     }
@@ -53,7 +53,7 @@ function HeaderMain() {
         </div>
         <div className='header-main__options'>
           <NavLink to="/task" className='button' onClick={cambiarTema}>Tareas</NavLink>
-          <a className="button is-info is-small m-2">Cursos</a>
+          <a href='https://www.youtube.com/@Neunapp/playlists' target="_blank" className="button is-info is-small m-2">Cursos</a>
           <NavLink to="/users/login/">
             <figure className="image is-32x32">
             { user ? <img

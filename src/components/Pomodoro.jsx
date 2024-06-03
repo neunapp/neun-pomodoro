@@ -9,8 +9,7 @@ import { CiEdit } from "react-icons/ci";
 import { BsClipboardCheckFill } from "react-icons/bs";
 //
 import { GlobalContext } from '../context/GlobalContext';
-import { apiAddTimes } from '../services/TimesServices.js'
-import { getTimeStorage, saveNewTimePomodoroStorage } from '../services/TimePomodoroData';
+import { getPomodoroTimeStorage, saveDataTimesUser } from './pomodoroTimeFunctions.js'
 //
 import { formattedTime } from '../utils/pomodoroFormat.js'
 //
@@ -39,7 +38,6 @@ function Pomodoro() {
   // hook
   const {  
     restartTimer, 
-    saveTimeCompleted
   } = usePomodoroCtrls()
 
   const iniciarCronometro = () => {
@@ -56,41 +54,20 @@ function Pomodoro() {
   }
 
   const finishCiclePomodoro = () => {
-    
-    // guardamos si es necesario
-    let objPomodoro = getTimeStorage()
-    // variable que representa id fecha
-    const hoy = format(new Date(), 'dd-MM-yyyy')
-    let date = format(new Date(), 'yyyyMMdd') + user.user_id.toString()
+    const objPomodoro = getPomodoroTimeStorage()
     let timeConsumed = 0
-    if (!isBreack && activePomodoro) {
+    if (isBreack == false) {
       timeConsumed = objPomodoro.time - timePomodoro
     }
-    // recuperamos el tiempo consumido
-    if (date != objPomodoro.date) {
-      if (objPomodoro.date != null) {
-        // fechas diferentes, guardar 
-        let data = {'date': hoy, 'time': objPomodoro.timeday + timeConsumed, 'user': user.user_id}
-        console.log('guarado datos en la nube 1', objPomodoro.time, timePomodoro, data);
-        apiAddTimes(data)
-      }
-      
-    } else {
-      let data = {'date': hoy, 'time': objPomodoro.timeday + timeConsumed, 'user': user.user_id}
-      console.log('guarado datos en la nube 2', objPomodoro.timeday, timePomodoro, data);
-      apiAddTimes(data)
+    let dataTimeObj = {
+      'date': format(new Date(), 'yyyy-MM-dd'),
+      'time': timeConsumed
     }
-    console.log('reiniciar cilo pomodoro');
-    restartTimer()
+    saveDataTimesUser(user, dataTimeObj, true)
+    // guardamos si es necesario
     setCounterCicle(1)
     setIsCheck(false)
-    saveNewTimePomodoroStorage(
-      objPomodoro.time/60,
-      objPomodoro.pause/60,
-      objPomodoro.cicle,
-      0,
-      null
-    )
+    restartTimer()
   }
 
   const editTimePomodoro = () => {

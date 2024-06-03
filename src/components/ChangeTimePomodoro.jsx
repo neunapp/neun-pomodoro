@@ -1,23 +1,22 @@
 import { useContext, useState } from "react";
-import { saveNewTimePomodoroStorage } from "../services/TimePomodoroData"
 import BaseFlotaingCard from "./base/BaseFlotaingCard"
 import ProgressBarManualApp from '../apps/ProgressBarManualApp'
 
 import { GlobalContext } from '../context/GlobalContext';
-import { getTimeStorage } from '../services/TimePomodoroData'
+import { getPomodoroTimeStorage, setNewTimePomodoro } from './pomodoroTimeFunctions.js'
 
 import './ChangeTimePomodoro.scss'
 
 const ChangeTimePomodoro = ({closeFuntion,}) => {
+  const  pomodoroTimeStorage = getPomodoroTimeStorage()
   const { 
-    setTimePomodoro, 
-    timePomodoro,
+    setTimePomodoro,
   } = useContext(GlobalContext)
-  const listTimes = [0.2,5,10,15,20,25,30,35,40,45,50,55,60]
+  const listTimes = [1,5,10,15,20,25,30,35,40,45,50,55,60]
   //
-  const [pauseValue, setPauseValue] = useState(getTimeStorage().pause/60)
-  const [cicleValue, setCicleValue] = useState(getTimeStorage().cicle)
-  const [newTimePomodoroValue, setNewTimePomodoroValue] = useState(timePomodoro/60)
+  const [pauseValue, setPauseValue] = useState(pomodoroTimeStorage.pause/60)
+  const [cicleValue, setCicleValue] = useState(pomodoroTimeStorage.cicle)
+  const [newTimePomodoroValue, setNewTimePomodoroValue] = useState(pomodoroTimeStorage.time/60)
 
 
   const selectedTime = (value) => {
@@ -26,7 +25,9 @@ const ChangeTimePomodoro = ({closeFuntion,}) => {
   }
 
   const saveObjPomodoro = () => {
-    saveNewTimePomodoroStorage(newTimePomodoroValue, pauseValue, cicleValue)
+    // validar si reiniciaron en descaso o en concentracion
+    
+    setNewTimePomodoro(newTimePomodoroValue, pauseValue, cicleValue, pomodoroTimeStorage.timeday)
     setTimePomodoro(newTimePomodoroValue*60)
     closeFuntion()
   }
@@ -44,7 +45,7 @@ const ChangeTimePomodoro = ({closeFuntion,}) => {
       <div className="card-times__ctrl">
         <div className="card-times__ctrl__item">
           <ProgressBarManualApp 
-            min={0.1}
+            min={1}
             text="Descanso:"
             stateObj={{'value': pauseValue, 'setValue': setPauseValue}}
             max="15"

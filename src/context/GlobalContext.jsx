@@ -2,11 +2,11 @@ import React, { createContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../services/FirebaseConfig.js';
 //
-import { getTimeStorage } from '../services/TimePomodoroData.js';
+import { getPomodoroTimeStorage } from '../components/pomodoroTimeFunctions.js'
 
 // creamos un contexo global
 const GlobalContext = createContext();
-const initialPomodoro = getTimeStorage()
+const initialPomodoro = getPomodoroTimeStorage()
 
 const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null)

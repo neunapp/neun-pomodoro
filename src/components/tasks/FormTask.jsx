@@ -80,7 +80,7 @@ function FormTask(props) {
         date_update: ahora,
         title: titleTask,
         description: descriptionTask,
-        date_end: format(dateTask, 'dd-MM-yyyy'),
+        date_end: format(dateTask, 'yyyy-MM-dd'),
         size: sizeTask,
         user_id: user.user_id,
         state: '0'

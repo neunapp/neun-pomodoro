@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 //
 import { useContext, useState, useEffect } from "react";
 //
@@ -7,6 +8,7 @@ import { apiSumTimeHours, apiSumTaskHoursLast7Days } from '../../services/TimesS
 import { GlobalContext } from '../../context/GlobalContext.jsx';
 import { getFrase } from '../../services/FrasesServices.js'
 import logoImg from '../../assets/pomodoro.png'
+import { saveDataTimesUser, getPomodoroTimeStorage } from "../pomodoroTimeFunctions.js";
 
 import './ProfileUser.scss'
 
@@ -16,12 +18,16 @@ const ProfileUser = () => {
   const [numHoras, setNumHoras] = useState(0)
   const [numHorasSemana, setHorasSemana] = useState(0)
 
-  const cerrarSesion = () => {
+  const cerrarSesion = async () => {
+    const objPomodoro = getPomodoroTimeStorage()
+    let objTime = {
+      'date': format(new Date(), 'yyyy-MM-dd'),
+      'time': objPomodoro.timeday
+    }
+    await saveDataTimesUser(user, objTime, true)
     logout()
-    window.location.href = '/'
+    // window.location.href = '/'
   }
-
-
 
   useEffect(() => {
     const fetchTaskCount = async () => {

@@ -1,9 +1,9 @@
 import { format } from 'date-fns'
 import { useContext, useState,} from "react"
 
-import { apiAddTinesUser } from '../services/TimesServices.js'
+import { getPomodoroTimeStorage } from '../components/pomodoroTimeFunctions.js'
 import { GlobalContext } from '../context/GlobalContext';
-import { getTimeStorage, saveNewTimePomodoroStorage } from '../services/TimePomodoroData';
+import { saveDataTimesUser } from '../components/pomodoroTimeFunctions.js';
 
 const usePomodoroCtrls = () => {
   const { 
@@ -18,70 +18,31 @@ const usePomodoroCtrls = () => {
     counterCicle,
     setCounterCicle } = useContext(GlobalContext)
   const [initialTime, setInitialTime] = useState(timePomodoro)
-  
-  
 
   const updateTimer = () => {
     setTimePomodoro(timePomodoro - 1)
   }
 
   const restartTimer = () => {
-    setTimePomodoro(getTimeStorage().time)
+    setTimePomodoro(getPomodoroTimeStorage().time)
     setActivePomodoro(false)
     setIsBreake(false)
   }
 
-  const guardarTimeDB = () => {
-    let localData = getTimeStorage()
-    console.log(localData);
-    // enviamos data a la BD
-    const hoy = format(new Date(), 'dd-MM-yyyy');
-    let data = {'date': hoy, 'time': localData.timeday, 'user': user.user_id}
-    console.log('guarado datos en la nube', data);
-    apiAddTinesUser(user, data)
-    //
-  }
-
-  const saveTimeCompleted = (userId) => {
+  const saveTimeCompleted = () => {
     // guarda en memoria local el timpo de concentracion
-    console.log('--- guardar tiempo --', userId)
-    let objPomodoro = getTimeStorage()
+    let objPomodoro = getPomodoroTimeStorage()
     // variable que representa id fecha
-    let date = format(new Date(), 'yyyyMMdd') + userId.toString()
-    if (date == objPomodoro.date) {
-      console.log('--- es misma fecha --', date, objPomodoro.date)
-      // se actualiza el time cocentracion local
-      objPomodoro.timeday = objPomodoro.timeday + objPomodoro.time
-      saveNewTimePomodoroStorage(
-        objPomodoro.time/60,
-        objPomodoro.pause/60,
-        objPomodoro.cicle,
-        objPomodoro.timeday,
-        date
-      )
-    } else {
-      console.log('--- es fecha diferente--', date, objPomodoro.date)
-      //
-      if (objPomodoro.date) {
-        guardarTimeDB()
-      }
-      
-      // es nueva fecha se registra nuevo tiempo
-      objPomodoro.timeday = objPomodoro.time
-      objPomodoro.date = date
-      saveNewTimePomodoroStorage(
-        objPomodoro.time/60,
-        objPomodoro.pause/60,
-        objPomodoro.cicle,
-        objPomodoro.timeday,
-        date
-      )
+    let timeObj = {
+      'date': format(new Date(), 'yyyy-MM-dd'),
+      'time':objPomodoro.timeday + objPomodoro.time
     }
+    saveDataTimesUser(user, timeObj, false)
   }
 
   const determineTimeClock = () => {
     // si no breack, time pomodoro, else time pausa
-    let localData = getTimeStorage()
+    let localData = getPomodoroTimeStorage()
     if (isBreack == false) {
       
       setIsBreake(true)
