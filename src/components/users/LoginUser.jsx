@@ -32,7 +32,6 @@ const LoginUser = () => {
     setLoad(true)
     try {
       await setPersistence(auth, browserLocalPersistence);
-      console.log('Persistencia configurada con éxito');
       await signInWithRedirect(auth, provider);
       setLoad(false)
     } catch (error) {
@@ -58,7 +57,7 @@ const LoginUser = () => {
           setLoad(false)
         }
       }).catch((error) => {
-        console.log('***********', error)
+        console.log(error)
         setLoad(false)
         // ...
       });

@@ -25,13 +25,12 @@ export const apiAddTimesUser = async (currentUser, dataTime) => {
             const timeRef = collection(userRef, 'times')
             // creamos nuevo documento para tasks
             await addDoc(timeRef, dataTime)
-            console.log('--datos guardados--')
         } catch(error) {
             console.log(error)
         }
         
     } else {
-        console.log('error: no hay un usuario')
+        console.log('error: no user')
     }
     
 }

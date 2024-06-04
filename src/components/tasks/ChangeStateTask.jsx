@@ -20,7 +20,6 @@ function ChangeStateTask(props) {
   const closeFlotaing = () => props.closeFunction(false)
 
   const updateStateTask = async (state) => {
-    console.log('actualizando');
     const ahora = format(new Date(), 'yyyy-MM-dd')
     setLoad(true)
     await apiUpdateTasksUser(user, props.task.id, {'state': state, 'date_update': ahora})

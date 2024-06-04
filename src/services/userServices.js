@@ -31,10 +31,8 @@ export const apiAddUsers = async (currentUser) => {
 
     try {
       await setDoc(userDocRef, userData, { merge: true });
-      console.log("User data saved successfully.");
       return true
     } catch (error) {
-      console.error("Error saving user data: ", error);
       return false
     }
 }

@@ -21,7 +21,6 @@ const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         let dataUser = {
           'user_id': user.uid,

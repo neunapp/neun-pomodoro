@@ -32,7 +32,6 @@ function SelectedTask(props) {
       setSelectTask({'title':'...'})
     }
     setLoad(false)
-    console.log(task);
   }
 
   const updateCompleteTask = async () => {

@@ -20,7 +20,6 @@ const LisTask = () => {
 
     useEffect(() => {
         const loadTaskApi = async () => {
-          console.log('--cargando tasks --', searchParams.get('paramState'))
           const paramstate = searchParams.get('paramState');
           setLoad(true)
           const resultado = await apiListUsersTasks(user, paramstate)

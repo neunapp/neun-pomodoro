@@ -165,7 +165,6 @@ export const apiAddTasksUser = async (currentUser, dataTask) => {
             const taskRef = collection(userRef, 'tasks')
             // creamos nuevo documento para tasks
             await addDoc(taskRef, dataTask)
-            console.log('datos guardados')
         } catch(error) {
             console.log(error)
         }
@@ -182,7 +181,6 @@ export const apiUpdateTasksUser = async (currentUser, taskID, dataTask) => {
             // referencia  la coleccion task para agregar una atrea
             const taskRef = doc(db, 'users', currentUser.user_id, 'tasks', taskID)
             await updateDoc(taskRef, dataTask)
-            console.log('actualizacion exitosa...')
             return true;
         } catch(error) {
             console.log(error)
@@ -190,7 +188,6 @@ export const apiUpdateTasksUser = async (currentUser, taskID, dataTask) => {
         }
         
     } else {
-        console.log('error: no hay un usuario')
         return false
     }
 }
@@ -201,13 +198,12 @@ export const apiDeleteTasksUser = async (currentUser, taskID, dataTask) => {
             // referencia  la coleccion task para agregar una atrea
             const taskRef = doc(db, 'users', currentUser.user_id, 'tasks', taskID)
             await deleteDoc(taskRef, dataTask)
-            console.log('delete exitosa...')
         } catch(error) {
             console.log(error)
         }
         
     } else {
-        console.log('error: no hay un usuario')
+        console.log('error: no user')
     }
 }
 

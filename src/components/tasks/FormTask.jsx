@@ -60,7 +60,6 @@ function FormTask(props) {
     
     const getDataUpdate = async () => {
       if (props.isUpdate && props.dataTask) {
-        console.log('-- asignar datos --')
         setTitleTask(props.dataTask.title)
         setdescriptionTask(props.dataTask.description)
         // setdateTask(format(props.dataTask.date_end, 'yyyy-MM-dd'))
@@ -98,7 +97,6 @@ function FormTask(props) {
 
   const deleteTask = () => {
     setLoad(true)
-    console.log('---- eliminando tarea ---')
     props.deleteFunction()
     setLoad(false)
   }

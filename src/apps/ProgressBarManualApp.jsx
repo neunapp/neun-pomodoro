@@ -3,7 +3,6 @@ import './ProgressBarManual.scss'
 const ProgressBarManualApp = (props) => {
 
   const handleChange = (event) => {
-    console.log(event.target.value)
     props.stateObj.setValue(parseFloat(event.target.value))
   }
 

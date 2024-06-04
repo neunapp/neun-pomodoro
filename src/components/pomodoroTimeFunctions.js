@@ -12,7 +12,6 @@ export const getPomodoroTimeStorage = () => {
   // si existe convertimos la cadena a json
   if (objTimePomodoro) {
     const timePomodoro = JSON.parse(objTimePomodoro)
-    console.log('-timer-: ', timePomodoro)
     return timePomodoro
   } else {
     const timePomodoro = {
@@ -42,7 +41,6 @@ const restartDataTime = () => {
     "objTimePomodoro",
     JSON.stringify(newData)
   )
-  console.log('se re-establece la data en memorio a estado inicial')
 }
 
 export const setNewTimePomodoro = (newTimePomodoroValue, pauseValue, cicleValue, timeday=0) => {
@@ -67,7 +65,6 @@ export const saveDataTimesUser = async (currentUser, timeObj, stopCiclo) => {
   pomodoroObj.date = String(pomodoroObj.date)
   timeObj.date = String(timeObj.date)
   if (pomodoroObj.date == timeObj.date) {
-    console.log('fechas iguales', pomodoroObj.date, timeObj.date);
     // es la misma fecha, se acumula el tiempo
     let newData = {
       'time': pomodoroObj.time,
@@ -83,7 +80,6 @@ export const saveDataTimesUser = async (currentUser, timeObj, stopCiclo) => {
       JSON.stringify(newData)
     )
     if (stopCiclo) {
-      console.log('fechas iguales/stop');
       let dataTime = {
         'date': timeObj.date,
         'time': newData.timeday,
@@ -92,10 +88,8 @@ export const saveDataTimesUser = async (currentUser, timeObj, stopCiclo) => {
       await apiAddTimesUser(currentUser, dataTime)
       // reiniciamos timeday pomodoro
       restartDataTime()
-      console.log('fechas iguales/stop 2');
     }
   } else {
-    console.log('fechas diferentes', pomodoroObj.date, timeObj.date);
     let dataTime = {
       'date': pomodoroObj.date,
       'time': pomodoroObj.timeday,
@@ -103,7 +97,6 @@ export const saveDataTimesUser = async (currentUser, timeObj, stopCiclo) => {
     }
     await apiAddTimesUser(currentUser, dataTime)
     if (stopCiclo) {
-      console.log('fechas diferentes/stop');
       let dataTime = {
         'date': timeObj.date,
         'time': timeObj.time,

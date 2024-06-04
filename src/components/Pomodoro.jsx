@@ -48,7 +48,6 @@ function Pomodoro() {
   }
 
   const chekCiclePomodoro = () => {
-    console.log('terminar ciclo?')
     setActivePomodoro(false)
     setIsCheck(true)
   }
@@ -63,7 +62,9 @@ function Pomodoro() {
       'date': format(new Date(), 'yyyy-MM-dd'),
       'time': timeConsumed
     }
-    saveDataTimesUser(user, dataTimeObj, true)
+    if (user) {
+      saveDataTimesUser(user, dataTimeObj, true)
+    }
     // guardamos si es necesario
     setCounterCicle(1)
     setIsCheck(false)

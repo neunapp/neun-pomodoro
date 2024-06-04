@@ -26,7 +26,7 @@ const auth = getAuth(app);
 const logout = () => {
   signOut(auth)
     .then(() => {
-      console.log('Sesión cerrada');
+      console.log('___');
       // Actualizar el estado de la aplicación o redirigir al usuario
     })
     .catch((error) => {
