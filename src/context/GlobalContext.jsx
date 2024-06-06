@@ -16,6 +16,7 @@ const GlobalProvider = ({ children }) => {
   const [timePomodoro, setTimePomodoro] = useState(initialPomodoro.time)
   const [activePomodoro, setActivePomodoro] = useState(false)
   const [isBreack, setIsBreake] = useState(false)
+  const [isReset, setIsReset] = useState(false)
   const [counterCicle, setCounterCicle] = useState(1)
   const [initialColor, setInitialColor] = useState('#0652DD')
 
@@ -51,7 +52,9 @@ const GlobalProvider = ({ children }) => {
       counterCicle,
       setCounterCicle,
       initialColor,
-      setInitialColor
+      setInitialColor,
+      isReset,
+      setIsReset
     }}>
         {children}
     </GlobalContext.Provider>

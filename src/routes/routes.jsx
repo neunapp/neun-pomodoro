@@ -3,6 +3,7 @@ import {
 } from "react-router-dom";
 
 import { lazy, Suspense } from 'react';
+import ProtectedRoute from './ProtectedRoute'
 
 import TaskPage from "../pages/TaskPage"
 import AddTaskPage from "../pages/AddTaskPage";
@@ -28,15 +29,27 @@ export const routes = createBrowserRouter([
       },
       {
         path: "task",
-        element: <TaskPage />
+        element: (
+          <ProtectedRoute>
+            <TaskPage />
+          </ProtectedRoute>
+        )
       },
       {
         path: "task/add",
-        element: <AddTaskPage />
+        element: (
+          <ProtectedRoute>
+            <AddTaskPage />
+          </ProtectedRoute>
+        )
       },
       {
         path: "task/update/:idTask",
-        element: <UpdateTaskPage />
+        element: (
+          <ProtectedRoute>
+            <UpdateTaskPage />
+          </ProtectedRoute>
+        )
       },
       {
         path: "users/login/",

@@ -23,12 +23,19 @@
   &__title {
     font-family: $ff-1;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 16px;
     color: $color-3;
+    @include desde($medium) {
+      font-size: 24px;
+    }
   }
   &__options {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+}
+
+.btn-main {
+  background: $color-2;
 }

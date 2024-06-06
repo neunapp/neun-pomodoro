@@ -13,8 +13,6 @@ import { getPomodoroTimeStorage, saveDataTimesUser } from './pomodoroTimeFunctio
 //
 import { formattedTime } from '../utils/pomodoroFormat.js'
 //
-import usePomodoroCtrls from '../hooks/usePomodoroCtrls';
-//
 import SelectedTask from './tasks/SelectedTask'
 import ChangeTimePomodoro from './ChangeTimePomodoro'
 import CheckPomodoro from './CheckPomodoro';
@@ -28,23 +26,28 @@ function Pomodoro() {
     activePomodoro, 
     setActivePomodoro, 
     isBreack,
+    setIsBreake,
     counterCicle,
     setCounterCicle,
     initialColor,
-    setInitialColor } = useContext(GlobalContext)
+    setInitialColor,
+    setIsReset } = useContext(GlobalContext)
   
   let [isEdit, setIsEdit] = useState(false)
   let [isCheck, setIsCheck] = useState(false)
-  // hook
-  const {  
-    restartTimer, 
-  } = usePomodoroCtrls()
 
   const iniciarCronometro = () => {
+    setIsReset(false)
     let value = !activePomodoro
     setActivePomodoro(value)
     setInitialColor('#00cec9')
     setIsCheck(false)
+  }
+
+  const resetTimePomodoro = () => {
+    setIsReset(true)
+    setActivePomodoro(false)
+    setIsBreake(false)
   }
 
   const chekCiclePomodoro = () => {
@@ -68,7 +71,7 @@ function Pomodoro() {
     // guardamos si es necesario
     setCounterCicle(1)
     setIsCheck(false)
-    restartTimer()
+    resetTimePomodoro()
   }
 
   const editTimePomodoro = () => {
@@ -115,7 +118,7 @@ function Pomodoro() {
 
           <div className="pomodoro__ctrls">
             { isCheck ? <CheckPomodoro  closeFunction={() => setIsCheck(false)} okFunction={finishCiclePomodoro} /> : null}
-            <button className="pomodoro__ctrls__btn" onClick={restartTimer}>
+            <button className="pomodoro__ctrls__btn" onClick={resetTimePomodoro}>
               <MdOutlineRestore />
             </button>
             
@@ -138,6 +141,7 @@ function Pomodoro() {
             }
           </button>
         </div>
+        
       </div>
       { isEdit ? <ChangeTimePomodoro closeFuntion={closeEditTime} /> : null }
       

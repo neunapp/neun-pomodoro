@@ -61,10 +61,10 @@ const usePomodoroCtrls = () => {
 
   const playSound = () => {
     if (isBreack == false) {
-      const alertSound = new Audio('/pom01.mp3')
+      const alertSound = new Audio('/pomstart.mp3')
       alertSound.play()
     } else {
-      const alertSound = new Audio('/pom02.mp3')
+      const alertSound = new Audio('/pomend.mp3')
       alertSound.play()
     }
     setInitialColor('#f39c12')

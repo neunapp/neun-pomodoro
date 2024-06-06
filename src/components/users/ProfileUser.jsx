@@ -25,6 +25,7 @@ const ProfileUser = () => {
       'time': objPomodoro.timeday
     }
     await saveDataTimesUser(user, objTime, true)
+    sessionStorage.removeItem('pomodoroIsAuth')
     logout()
     // window.location.href = '/'
   }

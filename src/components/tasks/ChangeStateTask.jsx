@@ -40,11 +40,11 @@ function ChangeStateTask(props) {
         <div className="change-state">
           <a 
             href="#" 
-            className="button is-info"
+            className="button is-success"
             onClick={() => updateStateTask('2')}>En Seleccion</a>
           <a 
             href="#" 
-            className="button is-success"
+            className="button is-info"
             onClick={() => updateStateTask('1')}>Terminado</a>
           <a 
             href="#" 

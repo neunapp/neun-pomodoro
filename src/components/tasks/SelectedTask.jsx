@@ -34,11 +34,12 @@ function SelectedTask(props) {
     setLoad(false)
   }
 
-  const updateCompleteTask = async () => {
+  const updateCompleteTask = async (value) => {
+    // value = estado al que se actualizara
     if (selectTask.id) {
       const ahora = format(new Date(), 'yyyy-MM-dd')
       setLoad(true)
-      const response = await apiUpdateTasksUser(user, selectTask.id, {'state':'1', 'date_update': ahora})
+      const response = await apiUpdateTasksUser(user, selectTask.id, {'state':value, 'date_update': ahora})
       if (response) {
         retiveSelectedTask()
       }

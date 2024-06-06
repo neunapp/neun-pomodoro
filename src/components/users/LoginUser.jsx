@@ -54,6 +54,8 @@ const LoginUser = () => {
           }
           setUser(usuario)
           apiAddUsers(result.user)
+          // estado de usuario activo
+          sessionStorage.setItem('pomodoroIsAuth', 'true')
           setLoad(false)
         }
       }).catch((error) => {

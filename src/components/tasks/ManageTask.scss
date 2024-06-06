@@ -23,9 +23,9 @@
     margin-bottom: 1em;
     &__tag {
       text-align: center;
-      width: 150px;
+      width: 160px;
       border: 1px solid;
-      padding: 10px 20px;
+      padding: 10px 10px;
       border-radius: 20px;
       color: $color-8;
       background: $color-7;
@@ -33,6 +33,7 @@
       font-size: 12px;
       margin: 3px;
       @include desde($medium) {
+        padding: 10px 20px;
         font-size: 15px;
         font-weight: bold;
       }
