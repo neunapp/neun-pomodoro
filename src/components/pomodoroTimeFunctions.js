@@ -22,6 +22,10 @@ export const getPomodoroTimeStorage = () => {
       'timeday': 0,
       'isUser': false, 
     }
+    localStorage.setItem(
+      "objTimePomodoro",
+      JSON.stringify(timePomodoro)
+    )
     return timePomodoro
   }
 }

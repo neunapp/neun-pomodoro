@@ -12,7 +12,7 @@ const ChangeTimePomodoro = ({closeFuntion,}) => {
   const { 
     setTimePomodoro,
   } = useContext(GlobalContext)
-  const listTimes = [0.12,5,10,15,20,25,30,35,40,45,50,55,60]
+  const listTimes = [1,5,10,15,20,25,30,35,40,45,50,55,60]
   //
   const [pauseValue, setPauseValue] = useState(pomodoroTimeStorage.pause/60)
   const [cicleValue, setCicleValue] = useState(pomodoroTimeStorage.cicle)
@@ -46,7 +46,7 @@ const ChangeTimePomodoro = ({closeFuntion,}) => {
       <div className="card-times__ctrl">
         <div className="card-times__ctrl__item">
           <ProgressBarManualApp 
-            min={0.05}
+            min={1}
             text="Descanso:"
             stateObj={{'value': pauseValue, 'setValue': setPauseValue}}
             max="15"

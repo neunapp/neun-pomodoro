@@ -58,6 +58,7 @@ export const apiSumTimeHours = async (currentUser) => {
 
 
 export const apiSumTaskHoursLast7Days = async (currentUser) => {
+    
     if (currentUser) {
         const timesCollection = collection(db, 'users', currentUser.user_id, 'times');
 
@@ -73,6 +74,34 @@ export const apiSumTaskHoursLast7Days = async (currentUser) => {
             timesCollection, 
             where('date', '>=', startOfPeriod),
             where('date', '<=', endOfPeriod),
+            orderBy('date', 'asc')
+        );
+
+        const querySnapshot = await getDocs(q);
+        let totalSeconds= 0;
+
+        querySnapshot.forEach((doc) => {
+            totalSeconds += doc.data().time;
+        });
+
+        //
+        return totalSeconds
+    } else {
+        return 0;
+    }
+};
+
+
+export const apiSumTaskHoursDay = async (currentUser) => {
+    if (currentUser) {
+        const timesCollection = collection(db, 'users', currentUser.user_id, 'times');
+
+        // Obtener la fecha de hace 7 días y la fecha de hoy
+        const today = format(new Date(), 'yyyy-MM-dd');
+
+        const q = query(
+            timesCollection, 
+            where('date', '==', today),
             orderBy('date', 'asc')
         );
 
