@@ -1,4 +1,4 @@
-import Pomodoro from '../components/Pomodoro.jsx'
+import Pomodoro from '../components/pomodoro/Pomodoro.jsx'
 
 function HomePage() {
 

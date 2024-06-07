@@ -10,7 +10,7 @@ import { apiSumTimeHours, apiSumTaskHoursLast7Days, apiSumTaskHoursDay } from '.
 import { GlobalContext } from '../../context/GlobalContext.jsx';
 import { getFrase } from '../../services/FrasesServices.js'
 import logoImg from '../../assets/pomodoro.png'
-import { saveDataTimesUser, getPomodoroTimeStorage } from "../pomodoroTimeFunctions.js";
+import { saveDataTimesUser, getPomodoroTimeStorage } from "../pomodoro/pomodoroTimeFunctions.js";
 
 import './ProfileUser.scss'
 
@@ -41,7 +41,7 @@ const ProfileUser = () => {
         const count = await apiCountTasksCompleted(user);
         const seconds = await apiSumTimeHours(user);
         const second7Day = await apiSumTaskHoursLast7Days(user);
-        const secondHoy = await apiSumTaskHoursLast7Days(user);
+        const secondHoy = await apiSumTaskHoursDay(user);
         setNumTareas(count);
         setNumHoras((seconds/3600).toFixed(2));
         setHorasSemana((second7Day/3600).toFixed(2));

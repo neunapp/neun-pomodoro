@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import BaseFlotaingCard from "./base/BaseFlotaingCard"
-import ProgressBarManualApp from '../apps/ProgressBarManualApp'
+import BaseFlotaingCard from "../base/BaseFlotaingCard"
+import ProgressBarManualApp from '../../apps/ProgressBarManualApp'
 
-import { GlobalContext } from '../context/GlobalContext';
+import { GlobalContext } from '../../context/GlobalContext';
 import { getPomodoroTimeStorage, setNewTimePomodoro } from './pomodoroTimeFunctions.js'
 
 import './ChangeTimePomodoro.scss'

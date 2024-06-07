@@ -8,12 +8,12 @@ import { IoStop } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import { BsClipboardCheckFill } from "react-icons/bs";
 //
-import { GlobalContext } from '../context/GlobalContext';
+import { GlobalContext } from '../../context/GlobalContext';
 import { getPomodoroTimeStorage, saveDataTimesUser } from './pomodoroTimeFunctions.js'
 //
-import { formattedTime } from '../utils/pomodoroFormat.js'
+import { formattedTime } from '../../utils/pomodoroFormat.js'
 //
-import SelectedTask from './tasks/SelectedTask'
+import SelectedTask from '../tasks/SelectedTask'
 import ChangeTimePomodoro from './ChangeTimePomodoro'
 import CheckPomodoro from './CheckPomodoro';
 

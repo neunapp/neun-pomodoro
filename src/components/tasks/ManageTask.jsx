@@ -29,8 +29,8 @@ function ManageTask() {
         <NavLink to="/task?paramState=1" className="manage-task__filter__tag">Terminado</NavLink>
       </div>
       <div className="manage-task__resume">
-        <p className="manage-task__resume__text">Completadas: 20</p>
-        <p>Concentracion: 10 Hrs</p>
+        <p className="manage-task__resume__text">Tareas Encontradas</p>
+        {/* <p>Concentracion: 10 Hrs</p> */}
       </div>
       <div className="manage-task__body">
         <LisTask />

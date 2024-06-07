@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { RouterProvider } from "react-router-dom";
 import { routes } from './routes/routes';
 
@@ -14,6 +14,25 @@ function App() {
     loadSuccess,
     _
   } = useContext(SuccessContext)
+
+
+  // solicitamos permiso para notificar 
+  useEffect(() => {
+    if (!("Notification" in window)) {
+      return;
+    }
+
+    // Solicitamos permiso para las notificaciones al cargar la aplicación
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        console.log("notificaciones on");
+      } else if (permission === "denied") {
+        console.log("notificaciones off");
+      } else {
+        console.log("notificacione on/off");
+      }
+    });
+  }, [])
 
   return (
     <GlobalProvider>

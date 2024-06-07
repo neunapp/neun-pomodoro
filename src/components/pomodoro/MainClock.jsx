@@ -3,8 +3,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { formattedTime } from '../../utils/pomodoroFormat.js'
 
 import { GlobalContext } from '../../context/GlobalContext';
-import { getPomodoroTimeStorage } from '../../components/pomodoroTimeFunctions.js'
-import { saveDataTimesUser } from '../../components/pomodoroTimeFunctions.js';
+import { getPomodoroTimeStorage, saveDataTimesUser } from './pomodoroTimeFunctions.js'
 import TimerWorker from '../../workers/timerWorker.js?worker';
 
 const MainClock = () => {
@@ -49,14 +48,33 @@ const MainClock = () => {
     saveDataTimesUser(user, timeObj, false)
   }
 
+  const completedNotification = (msj) => {
+    if ("Notification" in window) {
+      if (Notification.permission === 'granted') {
+        let notificacion = new Notification(msj)
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(
+          (permission) => {
+            if (permission === 'granted') {
+              let notificacion = new Notification(msj)
+            }
+          }
+        )
+      }
+    }
+  }
+
   const determineTimeClock = (flat=false, timerWorker=null) => {
     if (flat == false) {
+      completedNotification('Es hora de Brillar - Descanso terminado')
       const alertSound = new Audio('/pomstart.mp3')
       alertSound.play()
     } else {
+      completedNotification('Es hora de Estirar las piernas, relajate un momento')
       const alertSound = new Audio('/pomend.mp3')
       alertSound.play()
     }
+    
     setInitialColor('#f39c12')
     // respecto al breack
     if (flat == false) {
