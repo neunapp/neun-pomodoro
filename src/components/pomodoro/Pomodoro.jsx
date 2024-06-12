@@ -140,6 +140,22 @@ function Pomodoro() {
               activePomodoro ? <IoStop style={{ fontSize: 40, }}/> : <IoMdPlay style={{ fontSize: 40, }}/>
             }
           </button>
+
+          <button onClick={() => {
+            let newData = {
+              'time': 60,
+              'pause': 60,
+              'cicle': 4,
+              'date': '2024-06-11',
+              'timeday': 60,
+              'isUser': false, 
+            }
+            // verificamos si es stop
+            localStorage.setItem(
+              "objTimePomodoro",
+              JSON.stringify(newData)
+            )
+          }}>set local</button>
         </div>
         
       </div>

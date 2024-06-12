@@ -94,11 +94,13 @@ export const saveDataTimesUser = async (currentUser, timeObj, stopCiclo) => {
       restartDataTime()
     }
   } else {
+    
     let dataTime = {
       'date': pomodoroObj.date,
       'time': pomodoroObj.timeday,
       'user': currentUser.user_id,
     }
+    
     await apiAddTimesUser(currentUser, dataTime)
     if (stopCiclo) {
       let dataTime = {

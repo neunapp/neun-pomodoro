@@ -82,7 +82,7 @@ const ProfileUser = () => {
             <p className="user-perfil__reporte__item__title">Hoy</p>
             <p className="user-perfil__reporte__item__tag">{numHorasHoy} hrs</p>
           </div>
-          <div className="user-perfil__reporte__item">
+          <div className="user-perfil__reporte__item large">
             <p className="user-perfil__reporte__item__title">Semana/total</p>
             <p className="user-perfil__reporte__item__tag">{numHorasSemana} / {numHoras} hrs</p>
           </div>

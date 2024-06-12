@@ -15,22 +15,6 @@ function HeaderMain() {
   const { 
     user,
   } = useContext(GlobalContext)
-  // ==============================================
-  // useEffect(()=> {
-  //   if ((timePomodoro > 0) && (activePomodoro) ) {
-  //     const intervalId = setInterval(() => {
-  //       updateTimer()
-  //     }, 1000)
-  //     return () => clearInterval(intervalId)
-  //   } else if ((timePomodoro === 0) && (activePomodoro)) {
-  //     setActivePomodoro(false)
-  //     if (isBreack == false) {
-  //       saveTimeCompleted()
-  //     }
-  //     playSound()
-  //   }
-    
-  // }, [timePomodoro, activePomodoro])
 
   return (
     <>

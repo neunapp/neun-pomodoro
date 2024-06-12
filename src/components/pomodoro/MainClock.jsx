@@ -45,6 +45,7 @@ const MainClock = () => {
       'date': format(new Date(), 'yyyy-MM-dd'),
       'time':objPomodoro.timeday + objPomodoro.time
     }
+    
     saveDataTimesUser(user, timeObj, false)
   }
 
@@ -66,11 +67,11 @@ const MainClock = () => {
 
   const determineTimeClock = (flat=false, timerWorker=null) => {
     if (flat == false) {
-      completedNotification('Es hora de Brillar - Descanso terminado')
+      completedNotification('Es hora de Estirar las piernas, relajate un momento')
       const alertSound = new Audio('/pomstart.mp3')
       alertSound.play()
     } else {
-      completedNotification('Es hora de Estirar las piernas, relajate un momento')
+      completedNotification('Es hora de Brillar - Descanso terminado')
       const alertSound = new Audio('/pomend.mp3')
       alertSound.play()
     }
@@ -112,10 +113,9 @@ const MainClock = () => {
   
   useEffect(() => {
     const timerWorker = new TimerWorker();
-    setWorker(timerWorker);
-    timerWorker.postMessage({ command: 'initialTime', data: timePomodoro })
-    timerWorker.onmessage = (e) => {
-      
+      setWorker(timerWorker);
+      console.log('el usuario aqui es:', user)
+      timerWorker.postMessage({ command: 'initialTime', data: timePomodoro })
       timerWorker.onmessage = (e) => {
         if (typeof e.data === 'number') {
           setTimePomodoro(e.data);
@@ -133,12 +133,12 @@ const MainClock = () => {
           determineTimeClock(mutableState.current.isBreack, timerWorker)
         }
       };
-    };
 
-    return () => {
-      timerWorker.terminate();
-    };
-  },[])
+      return () => {
+        timerWorker.terminate();
+      };
+    
+  },[user])
 
 
   const startTimer = () => {
