@@ -38,15 +38,15 @@ const MainClock = () => {
   }
 
   const saveTimeCompleted = () => {
-    // guarda en memoria local el timpo de concentracion
+    // guarda el tiempo de concentracion
     let objPomodoro = getPomodoroTimeStorage()
     // variable que representa id fecha
     let timeObj = {
       'date': format(new Date(), 'yyyy-MM-dd'),
-      'time':objPomodoro.timeday + objPomodoro.time
+      'time': objPomodoro.time
     }
     
-    saveDataTimesUser(user, timeObj, false)
+    saveDataTimesUser(user, timeObj, objPomodoro, false)
   }
 
   const completedNotification = (msj) => {
@@ -114,7 +114,6 @@ const MainClock = () => {
   useEffect(() => {
     const timerWorker = new TimerWorker();
       setWorker(timerWorker);
-      console.log('el usuario aqui es:', user)
       timerWorker.postMessage({ command: 'initialTime', data: timePomodoro })
       timerWorker.onmessage = (e) => {
         if (typeof e.data === 'number') {

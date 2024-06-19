@@ -66,7 +66,7 @@ function Pomodoro() {
       'time': timeConsumed
     }
     if (user) {
-      saveDataTimesUser(user, dataTimeObj, true)
+      saveDataTimesUser(user, dataTimeObj, objPomodoro, true)
     }
     // guardamos si es necesario
     setCounterCicle(1)
@@ -95,6 +95,7 @@ function Pomodoro() {
             ruta="/task"
             child={<CiEdit style={{ fontSize: 30, marginBottom: -5 }}/>}
           />
+
           <div className="pomodoro__clock" style={{boxShadow: `0px 0px 10px 5px ${initialColor}`}}>
             <p className="pomodoro__clock__item">
               <span className="pomodoro__clock__time">{ formattedTime(timePomodoro) }</span>
@@ -110,7 +111,7 @@ function Pomodoro() {
             
           </div>
 
-          {/* <p className='pomodoro__report'>{(isBreack) ? '¡Hora de estirar las piernas!':'¡Hora de brillar!'}</p> */}
+          
           { (isBreack) ? 
             <p className='pomodoro__report animate'>¡Hora de estirar las piernas!</p> 
             : <p className='pomodoro__report'>¡Hora de brillar! </p>

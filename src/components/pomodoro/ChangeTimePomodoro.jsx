@@ -27,7 +27,12 @@ const ChangeTimePomodoro = ({closeFuntion,}) => {
   const saveObjPomodoro = () => {
     // validar si reiniciaron en descaso o en concentracion
     
-    setNewTimePomodoro(newTimePomodoroValue, pauseValue, cicleValue, pomodoroTimeStorage.timeday)
+    setNewTimePomodoro({
+      newTimePomodoroValue:newTimePomodoroValue*60, 
+      pauseValue:pauseValue*60, 
+      cicleValue:cicleValue, 
+      timeday:pomodoroTimeStorage.timeday
+    })
     setTimePomodoro(newTimePomodoroValue*60)
     window.location.reload();
     closeFuntion()

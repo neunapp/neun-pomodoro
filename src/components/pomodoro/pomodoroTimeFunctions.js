@@ -47,43 +47,48 @@ const restartDataTime = () => {
   )
 }
 
-export const setNewTimePomodoro = (newTimePomodoroValue, pauseValue, cicleValue, timeday=0) => {
+export const setNewTimePomodoro = ({
+  newTimePomodoroValue=25*60, // en segundos  = t * 60
+  pauseValue=5*60, // en segundos  = t * 60
+  cicleValue=4, 
+  timeday=0, // en segundos  = t * 60
+  date=String(format(new Date(), 'yyyy-MM-dd')),
+  isUser=true} = {}
+) => { // Asegurar que la fecha se interprete como UTC    
   let newData = {
-    'time': newTimePomodoroValue*60,
-    'pause': pauseValue*60,
+    'time': newTimePomodoroValue,
+    'pause': pauseValue,
     'cicle': cicleValue,
-    'date': String(format(new Date(), 'yyyy-MM-dd')),
     'timeday': timeday,
-    'isUser': false, 
+    'date': date,
+    'isUser': isUser, 
   }
   // verificamos si es stop
   localStorage.setItem(
     "objTimePomodoro",
     JSON.stringify(newData)
   )
+  return newData
 }
 
-export const saveDataTimesUser = async (currentUser, timeObj, stopCiclo) => {
-  const pomodoroObj = getPomodoroTimeStorage()
+export const saveDataTimesUser = async (currentUser, timeObj, pomodoroObj, stopCiclo) => {
   // normalizamos los datos
   pomodoroObj.date = String(pomodoroObj.date)
   timeObj.date = String(timeObj.date)
   if (pomodoroObj.date == timeObj.date) {
     // es la misma fecha, se acumula el tiempo
-    let newData = {
-      'time': pomodoroObj.time,
-      'pause': pomodoroObj.pause,
-      'cicle': pomodoroObj.cicle,
-      'date': pomodoroObj.date,
-      'timeday': pomodoroObj.timeday + timeObj.time,
-      'isUser': currentUser ? true : false, 
-    }
+    let newData = setNewTimePomodoro({
+      newTimePomodoroValue:pomodoroObj.time, 
+      pauseValue:pomodoroObj.pause, 
+      cicle:pomodoroObj.cicle,
+      timeday:pomodoroObj.timeday + timeObj.time,
+      date:pomodoroObj.date,
+      isUser:currentUser ? true : false
+    })
+    //
     // verificamos si es stop
-    localStorage.setItem(
-      "objTimePomodoro",
-      JSON.stringify(newData)
-    )
     if (stopCiclo) {
+      // cerrar ciclo y guardar datos
       let dataTime = {
         'date': timeObj.date,
         'time': newData.timeday,
@@ -94,14 +99,24 @@ export const saveDataTimesUser = async (currentUser, timeObj, stopCiclo) => {
       restartDataTime()
     }
   } else {
-    
-    let dataTime = {
+    // es otro dia, guardamos dia anterior
+    let lastDataTime = {
       'date': pomodoroObj.date,
       'time': pomodoroObj.timeday,
       'user': currentUser.user_id,
     }
     
-    await apiAddTimesUser(currentUser, dataTime)
+    await apiAddTimesUser(currentUser, lastDataTime)
+    // es otro dia, acumulamos dia actual
+    let newData = setNewTimePomodoro({
+      newTimePomodoroValue:pomodoroObj.time, 
+      pauseValue:pomodoroObj.pause, 
+      cicle:pomodoroObj.cicle,
+      timeday:timeObj.time,
+      date:timeObj.date,
+      isUser:currentUser ? true : false
+    })
+
     if (stopCiclo) {
       let dataTime = {
         'date': timeObj.date,
@@ -109,7 +124,7 @@ export const saveDataTimesUser = async (currentUser, timeObj, stopCiclo) => {
         'user': currentUser.user_id,
       }
       await apiAddTimesUser(currentUser, dataTime)
+      restartDataTime()
     }
-    restartDataTime()
   }
 }

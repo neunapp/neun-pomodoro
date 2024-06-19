@@ -25,11 +25,11 @@ function App() {
     // Solicitamos permiso para las notificaciones al cargar la aplicación
     Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
-        console.log("notificaciones on");
+        console.log("on");
       } else if (permission === "denied") {
-        console.log("notificaciones off");
+        console.log("off");
       } else {
-        console.log("notificacione on/off");
+        console.log("on/off");
       }
     });
   }, [])

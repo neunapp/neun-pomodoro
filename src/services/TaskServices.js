@@ -100,8 +100,6 @@ export const apiAddTasksUser = async (currentUser, dataTask) => {
             console.log(error)
         }
         
-    } else {
-        console.log('error: no hay un usuario')
     }
     
 }
@@ -133,8 +131,6 @@ export const apiDeleteTasksUser = async (currentUser, taskID, dataTask) => {
             console.log(error)
         }
         
-    } else {
-        console.log('error: no user')
     }
 }
 

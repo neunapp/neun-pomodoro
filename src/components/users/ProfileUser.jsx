@@ -17,6 +17,7 @@ import './ProfileUser.scss'
 const ProfileUser = () => {
   const { user } = useContext(GlobalContext)
   const [load, setLoad] = useState(false)
+  const [frase, setFrase] = useState('');
   const [numTareas, setNumTareas] = useState(0)
   const [numHoras, setNumHoras] = useState(0)
   const [numHorasSemana, setHorasSemana] = useState(0)
@@ -26,9 +27,9 @@ const ProfileUser = () => {
     const objPomodoro = getPomodoroTimeStorage()
     let objTime = {
       'date': format(new Date(), 'yyyy-MM-dd'),
-      'time': objPomodoro.timeday
+      'time': 0
     }
-    await saveDataTimesUser(user, objTime, true)
+    await saveDataTimesUser(user, objTime, objPomodoro, true)
     sessionStorage.removeItem('pomodoroIsAuth')
     logout()
     // window.location.href = '/'
@@ -54,7 +55,7 @@ const ProfileUser = () => {
         console.log('finally')
       }
     };
-
+    setFrase(getFrase())
     fetchTaskCount();
   }, [user])
 
@@ -75,7 +76,7 @@ const ProfileUser = () => {
         </figure>
       </div>
       <h3 className="user-perfil__title">{ user.name }</h3>
-      <p className="user-perfil__text">{getFrase()}</p>
+      <p className="user-perfil__text">{frase}</p>
       {load ? <SimpleLoading /> :
         <div className="user-perfil__reporte">
           <div className="user-perfil__reporte__item">

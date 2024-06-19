@@ -30,7 +30,7 @@ export const apiAddTimesUser = async (currentUser, dataTime) => {
         }
         
     } else {
-        console.log('error: no user')
+        console.log('error: no user o time')
     }
     
 }
