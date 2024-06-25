@@ -1,8 +1,26 @@
-# React + Vite
+ ==== Documentacion ====
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ 1) la aplicacion se dibide en 3 modulos principales
+  - pomodor
+  - task
+  - users
 
-Currently, two official plugins are available:
+2) el modulo pomodoro contempla todas las funciones del reloj 
+  - el codigo principal del reloj se encuentra en
+   Mainclock pomodoro
+  - los controles visuales del pomodoro se encuentran en el componente pomodoro
+  - La funciones de gurdado local del pomodor se encutran dentro del componente
+    pomodor en el archivo pomodorTineFunctions.js
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3) el modulo task funciona con una base de datos en Firebase con el siguiente diseño:
+  - Users
+    -task
+      - tarea
+      - descripcion
+      - fecha
+      - tamaño
+      -user_id
+    -times
+      - timepo en segundos
+      - fecha
+      - user_id
