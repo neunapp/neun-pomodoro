@@ -1,7 +1,7 @@
 import { 
   GoogleAuthProvider, 
   getAuth, 
-  signInWithRedirect, 
+  signInWithPopup, 
   getRedirectResult,
   setPersistence, 
   browserLocalPersistence
@@ -32,42 +32,36 @@ const LoginUser = () => {
     setLoad(true)
     try {
       await setPersistence(auth, browserLocalPersistence);
-      await signInWithRedirect(auth, provider);
-      setLoad(false)
+      await signInWithPopup(auth, provider)
+        .then((result) => {
+          
+          if (result) {
+            const usuario = {
+              'user_id': result.user.uid,
+              'name': result.user.displayName,
+              'email': result.user.email,
+              'photo': result.user.photoURL,
+            }
+            setUser(usuario)
+            apiAddUsers(result.user)
+            // estado de usuario activo
+            sessionStorage.setItem('pomodoroIsAuth', 'true')
+            setLoad(false)
+          }
+        }).catch((error) => {
+          console.log(error)
+          setLoad(false)
+          // ...
+        });
+        setLoad(false)
     } catch (error) {
       console.log(error)
       setLoad(false)
     }
   }
-
-  const getUsuario = async () => {
-    setLoad(true)
-    await getRedirectResult(auth)
-      .then((result) => {
-        
-        if (result) {
-          const usuario = {
-            'user_id': result.user.uid,
-            'name': result.user.displayName,
-            'email': result.user.email,
-            'photo': result.user.photoURL,
-          }
-          setUser(usuario)
-          apiAddUsers(result.user)
-          // estado de usuario activo
-          sessionStorage.setItem('pomodoroIsAuth', 'true')
-          setLoad(false)
-        }
-      }).catch((error) => {
-        console.log(error)
-        setLoad(false)
-        // ...
-      });
-      setLoad(false)
-  }
   
   useEffect(() => {
-    getUsuario()
+    // getUsuario()
   }, [user])
 
   return (

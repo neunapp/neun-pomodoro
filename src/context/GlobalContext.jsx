@@ -13,6 +13,7 @@ const GlobalProvider = ({ children }) => {
   // funcion inicial
   
   // setea el tiempo de concentracion del usuario
+  const [loadUser, setLoadUser] = useState(false)
   const [timePomodoro, setTimePomodoro] = useState(initialPomodoro.time)
   const [activePomodoro, setActivePomodoro] = useState(false)
   const [isBreack, setIsBreake] = useState(false)
@@ -21,6 +22,7 @@ const GlobalProvider = ({ children }) => {
   const [initialColor, setInitialColor] = useState('#0652DD')
 
   useEffect(() => {
+    setLoadUser(true)
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         let dataUser = {
@@ -30,8 +32,10 @@ const GlobalProvider = ({ children }) => {
           'photo': user.photoURL,
         }
         setUser(dataUser);
+        setLoadUser(false)
       } else {
         setUser(null)
+        setLoadUser(false)
       }
       
     });
@@ -43,6 +47,7 @@ const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider value={{ 
       user, 
       setUser, 
+      loadUser,
       timePomodoro, 
       setTimePomodoro,
       activePomodoro,
